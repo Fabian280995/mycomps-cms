@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Sport {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  adminId       String        
+  name          String
+  competitions  Competition[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Location {
+  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  adminId     String  
+  name        String
+  url         String
+  addressId   String?          @db.ObjectId
+  address     Address?         @relation(fields: [addressId], references: [id])
+  competitions Competition[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model Organizer {
+  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  adminId     String  
+  name        String
+  url         String
+  addressId   String?          @db.ObjectId
+  address     Address?         @relation(fields: [addressId], references: [id])
+  competitions Competition[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model Competition {
+  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  adminId     String  
+  name        String
+  description String?
+  startDate   DateTime
+  endDate     DateTime
+  sport       Sport           @relation(fields: [sportId], references: [id])
+  sportId     String          @db.ObjectId
+  location    Location        @relation(fields: [locationId], references: [id])
+  locationId  String          @db.ObjectId
+  organizer   Organizer       @relation(fields: [organizerId], references: [id])
+  organizerId String          @db.ObjectId
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model Address {
+  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  adminId     String
+  street      String
+  number      String
+  city        String
+  state       String
+  zip         String
+  country     String
+  organizers  Organizer[]
+  locations   Location[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
