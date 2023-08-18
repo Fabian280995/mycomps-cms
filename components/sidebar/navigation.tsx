@@ -9,6 +9,7 @@ import {
   LayoutDashboard,
   MapPin,
   MoreHorizontal,
+  Newspaper,
   Trophy,
   Users2,
   Wrench,
@@ -43,6 +44,12 @@ export function Navigation({
       href: `/competitions`,
       label: "Competitions",
       active: pathname === `/competitions`,
+    },
+    {
+      icon: <Newspaper className="w-6 h-6 " />,
+      href: `/news`,
+      label: "News",
+      active: pathname === `/news`,
     },
     {
       icon: <Wrench className="w-6 h-6 " />,

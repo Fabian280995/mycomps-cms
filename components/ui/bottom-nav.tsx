@@ -1,15 +1,16 @@
 "use client";
-import Link from "next/link";
 import React from "react";
-import { Button } from "./button";
+import { usePathname, useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "./tooltip";
-import { usePathname, useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
 
 interface Props {
   routes: {
@@ -30,10 +31,10 @@ const BottomNav = ({ routes }: Props) => {
   }, []);
 
   return (
-    <div
-      className="shadow-md rounded-full flex gap-x-2 bg-white p-2 max-w-2xl md:mx-auto
-      items-center justify-around mb-4 mx-2
-    "
+    <motion.div
+      className="shadow-md rounded-full max-w-prose flex gap-x-6 bg-white px-6 py-2 md:mx-auto
+      items-center justify-around mb-4 mx-2"
+      layout
     >
       {isMounted ? (
         <TooltipProvider>
@@ -41,18 +42,15 @@ const BottomNav = ({ routes }: Props) => {
             const active = pathname === route.href;
             return (
               <Tooltip key={route.label + "|" + route.href}>
-                <TooltipTrigger>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className={cn(
-                      "flex flex-col items-center justify-center",
-                      active ? "bg-gray-100" : "bg-transparent"
-                    )}
-                    onClick={() => router.push(route.href)}
-                  >
-                    {route.icon}
-                  </Button>
+                <TooltipTrigger
+                  className={cn(
+                    "flex flex-col items-center justify-center p-2 rounded-lg border-2 border-transparent hover:border-gray-100 transition",
+                    "text-gray-400 hover:text-gray-600 duration-75",
+                    active ? "bg-gray-100 text-gray-900" : "bg-transparent"
+                  )}
+                  onClick={() => router.push(route.href)}
+                >
+                  {route.icon}
                 </TooltipTrigger>
                 <TooltipContent>
                   <span className="text-xs font-semibold">{route.label}</span>
@@ -61,8 +59,12 @@ const BottomNav = ({ routes }: Props) => {
             );
           })}
         </TooltipProvider>
-      ) : null}
-    </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center p-2 rounded-lg animate-spin">
+          <Loader2 className="w-6 h-6 text-slate-500" />
+        </div>
+      )}
+    </motion.div>
   );
 };
 

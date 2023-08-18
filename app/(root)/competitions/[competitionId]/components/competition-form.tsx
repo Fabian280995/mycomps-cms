@@ -104,7 +104,7 @@ const CompetitionForm: React.FC<Props> = ({
     try {
       setLoading(true);
       if (initialData) {
-        await axios.patch(`/api/competitions/${params.categoryId}`, data);
+        await axios.patch(`/api/competitions/${params.competitionId}`, data);
       } else {
         await axios.post(`/api/competitions`, data);
       }

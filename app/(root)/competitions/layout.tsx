@@ -46,9 +46,9 @@ export default async function SetupLayout({
   ];
 
   return (
-    <div className="w-full h-full flex">
+    <div className="relative w-full h-full flex">
       {children}
-      <div className="fixed bottom-0 right-0 left-0">
+      <div className="bottom-0 right-0 left-0 absolute flex items-center justify-center">
         <BottomNav routes={routes} />
       </div>
     </div>
