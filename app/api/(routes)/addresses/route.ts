@@ -35,6 +35,8 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("[ADDRESSES_POST]", error);
     return new NextResponse("Internal error", { status: 500 });
+  } finally {
+    await prismadb.$disconnect();
   }
 }
 

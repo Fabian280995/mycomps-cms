@@ -45,30 +45,6 @@ export function Navigation({
       active: pathname === `/competitions`,
     },
     {
-      icon: <Dumbbell className="w-6 h-6 " />,
-      href: `/sport`,
-      label: "Sport",
-      active: pathname === `/sport`,
-    },
-    {
-      icon: <MapPin className="w-6 h-6 " />,
-      href: `/locations`,
-      label: "Locations",
-      active: pathname === `/locations`,
-    },
-    {
-      icon: <Users2 className="w-6 h-6 " />,
-      href: `/organizers`,
-      label: "Organizers",
-      active: pathname === `/organizers`,
-    },
-    {
-      icon: <Home className="w-6 h-6 " />,
-      href: `/addresses`,
-      label: "Addresses",
-      active: pathname === `/addresses`,
-    },
-    {
       icon: <Wrench className="w-6 h-6 " />,
       href: `/settings`,
       label: "Settings",

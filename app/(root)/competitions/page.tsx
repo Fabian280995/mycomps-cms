@@ -1,10 +1,6 @@
-import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/ui/page-header";
-import prismadb from "@/lib/prismadb";
-import { Plus } from "lucide-react";
 import { CompetitionsClient } from "./components/client";
 import { fetchCompetitions } from "@/lib/actions/competition.actions";
-import { redirect } from "next/navigation";
 import AddButton from "@/components/ui/add-button";
 
 export default async function CompetitionsPage() {
@@ -26,6 +22,7 @@ export default async function CompetitionsPage() {
     organizerName: competition.organizer.name,
     createdAt: new Date(competition.createdAt).toLocaleDateString(),
   }));
+
   return (
     <section className="w-full px-16 py-20">
       <PageHeader title="Competitions" subtitle="Übersicht aller Wttkämpfe">

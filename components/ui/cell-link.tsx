@@ -2,6 +2,7 @@
 import { cn } from "@/lib/utils";
 import { Link as LinkIcon } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface CellActionProps {
   url: string;
@@ -14,9 +15,16 @@ export const CellLink: React.FC<CellActionProps> = ({
   name,
   mode = "link",
 }) => {
+  const pathname = usePathname();
+  const lastPathIndex = pathname.split("/").slice(-1).toString();
+
+  const route = url.split("/").slice(0, -1).includes(lastPathIndex)
+    ? pathname + "/" + url.split("/").slice(-1)
+    : pathname + "/" + url;
+
   return (
     <Link
-      href={url}
+      href={route}
       className={cn(
         `flex items-center transition hover:underline
         group gap-x-0.5 text-slate-700`,

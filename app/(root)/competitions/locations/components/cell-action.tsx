@@ -7,9 +7,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { OrganizerColumn } from "./columns";
+import { LocationColumn } from "./columns";
 import { Button } from "@/components/ui/button";
-import { Copy, Edit, Globe, Globe2, MoreHorizontal, Trash } from "lucide-react";
+import { Copy, Edit, Globe2, MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -17,7 +17,7 @@ import axios from "axios";
 import { AlertModal } from "@/components/modals/alert-modal";
 
 interface CellActionProps {
-  data: OrganizerColumn;
+  data: LocationColumn;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -34,10 +34,10 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onDelete = async (id: string) => {
     try {
       setLoading(true);
-      await axios.delete(`/api/organizer/${id}`);
+      await axios.delete(`/api/locations/${id}`);
       router.refresh();
-      router.push(`/organizers`);
-      toast.success("Organizer deleted successfully.");
+      router.push(`/locations`);
+      toast.success("Location deleted successfully.");
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -47,7 +47,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   };
 
   const onUpdate = (id: string) => {
-    router.push(`/organizers/${id}`);
+    router.push(`/locations/${id}`);
   };
 
   return (
@@ -67,15 +67,15 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem onClick={() => onCopy(data.id)}>
+          <DropdownMenuItem>
             <a
               href={data.url}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center"
+              className="flex items-center hover:underline"
             >
-              <Globe className="mr-2 h-4 w-4" />
-              Visit
+              <Globe2 className="mr-2 h-4 w-4" />
+              Show
             </a>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => onCopy(data.id)}>
