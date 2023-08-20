@@ -6,10 +6,12 @@ import { cn } from "@/lib/utils";
 import {
   Dumbbell,
   Home,
+  Image,
   LayoutDashboard,
   MapPin,
   MoreHorizontal,
   Newspaper,
+  Settings,
   Trophy,
   Users2,
   Wrench,
@@ -52,7 +54,13 @@ export function Navigation({
       active: pathname === `/news`,
     },
     {
-      icon: <Wrench className="w-6 h-6 " />,
+      icon: <Image className="w-6 h-6 " />,
+      href: `/gallery`,
+      label: "Gallery",
+      active: pathname === `/gallery`,
+    },
+    {
+      icon: <Settings className="w-6 h-6 " />,
       href: `/settings`,
       label: "Settings",
       active: pathname === `/settings`,

@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 import BottomNav from "@/components/ui/bottom-nav";
-import { Dumbbell, Home, LayoutDashboard, MapPin, Users2 } from "lucide-react";
+import { Dumbbell, Home, MapPin, Trophy, Users2 } from "lucide-react";
 
 export default async function SetupLayout({
   children,
@@ -19,7 +19,7 @@ export default async function SetupLayout({
 
   const routes = [
     {
-      icon: <LayoutDashboard className="w-6 h-6 " />,
+      icon: <Trophy className="w-6 h-6 " />,
       href: `/competitions`,
       label: "Overview",
     },

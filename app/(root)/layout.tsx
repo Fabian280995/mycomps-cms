@@ -1,7 +1,19 @@
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import "../globals.css";
+import "@uploadthing/react/styles.css";
+
+import { ClerkProvider } from "@clerk/nextjs";
+import { Inter } from "next/font/google";
 
 import Sidebar from "@/components/sidebar";
+
+import { ToasterProvider } from "@/providers/toast-provider";
+
+export const metadata = {
+  title: "mycomps - cms",
+  description: "CMS for mycomps by Fabian Lessmann",
+};
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default async function SetupLayout({
   children,
@@ -10,16 +22,17 @@ export default async function SetupLayout({
   children: React.ReactNode;
   params: { storeId: string };
 }) {
-  const { userId } = auth();
-
-  if (!userId) {
-    redirect("/sign-in");
-  }
-
   return (
-    <div className="w-full h-full flex">
-      <Sidebar />
-      {children}
-    </div>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${inter.className} bg-dark-1`}>
+          <div className="w-full h-full flex">
+            <ToasterProvider />
+            <Sidebar />
+            {children}
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

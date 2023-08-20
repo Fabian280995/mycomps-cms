@@ -2,13 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 import BottomNav from "@/components/ui/bottom-nav";
-import {
-  Dumbbell,
-  LayoutDashboard,
-  MapPin,
-  Paperclip,
-  PictureInPicture2,
-} from "lucide-react";
+import { Image, Newspaper, ScrollText } from "lucide-react";
 
 export default async function SetupLayout({
   children,
@@ -25,17 +19,17 @@ export default async function SetupLayout({
 
   const routes = [
     {
-      icon: <LayoutDashboard className="w-6 h-6" />,
+      icon: <Newspaper className="w-6 h-6" />,
       href: `/news`,
       label: "Overview",
     },
     {
-      icon: <Paperclip className="w-6 h-6" />,
+      icon: <ScrollText className="w-6 h-6" />,
       href: `/news/articles`,
       label: "Articles",
     },
     {
-      icon: <PictureInPicture2 className="w-6 h-6" />,
+      icon: <Image className="w-6 h-6" />,
       href: `/news/pictures`,
       label: "Pictures",
     },

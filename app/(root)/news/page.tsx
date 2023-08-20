@@ -1,6 +1,4 @@
 import PageHeader from "@/components/ui/page-header";
-import { fetchCompetitions } from "@/lib/actions/competition.actions";
-import AddButton from "@/components/ui/add-button";
 
 export default async function NewsPage() {
   return (
