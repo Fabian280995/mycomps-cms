@@ -47,6 +47,12 @@ export const ImageUploadModal: React.FC<Props> = ({
     }
   };
 
+  const onEnd = () => {
+    onClose();
+    setFiles([]);
+    setImage(null);
+  };
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -88,13 +94,14 @@ export const ImageUploadModal: React.FC<Props> = ({
         />
       </div>
       <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-        <Button disabled={loading} variant="outline" onClick={onClose}>
+        <Button disabled={loading} variant="outline" onClick={onEnd}>
           Cancel
         </Button>
         <Button
           disabled={loading || !files.length}
           onClick={() => {
             onUpload(files);
+            onEnd();
           }}
           className="bg-teal-600 hover:bg-teal-900"
         >
