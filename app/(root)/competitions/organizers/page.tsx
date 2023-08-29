@@ -23,7 +23,7 @@ export default async function OrganizersPage() {
   return (
     <section className="w-full px-16 py-20">
       <PageHeader title="Organizers" subtitle="Übersicht aller Veranstalter">
-        <AddButton destination="organizers" name="Veranstalter" />
+        <AddButton destination="competitions/organizers" name="Veranstalter" />
       </PageHeader>
       <OrganizersClient data={formattedOrganizers} />
     </section>

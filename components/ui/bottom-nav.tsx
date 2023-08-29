@@ -37,7 +37,7 @@ const BottomNav = ({ routes }: Props) => {
       layout
     >
       {isMounted ? (
-        <TooltipProvider>
+        <TooltipProvider delayDuration={300}>
           {routes.map((route) => {
             const active = pathname === route.href;
             return (

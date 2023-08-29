@@ -17,7 +17,7 @@ export default async function SportPage() {
   return (
     <section className="w-full space-y-4 px-16 py-20">
       <PageHeader title="Sport" subtitle="Übersicht aller Sportarten">
-        <AddButton destination="sport" name="Sportart" />
+        <AddButton destination="competitions/sport" name="Sportart" />
       </PageHeader>
       <SportsClient data={formattedSports} />
     </section>

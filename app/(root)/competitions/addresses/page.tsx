@@ -20,7 +20,7 @@ export default async function SportPage() {
   return (
     <section className="w-full space-y-4 px-16 py-20">
       <PageHeader title="Addresses" subtitle="Übersicht aller Adressen">
-        <AddButton destination="addresses" name="Adresse" />
+        <AddButton destination="competitions/addresses" name="Adresse" />
       </PageHeader>
       <AddressesClient data={formattedAddresses} />
     </section>
