@@ -2,7 +2,10 @@ import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
-import { fetchSlideshows } from "@/lib/actions/slideshows.actions";
+import {
+  fetchPublishedSlideshows,
+  fetchSlideshows,
+} from "@/lib/actions/slideshows.actions";
 
 export async function POST(req: Request) {
   try {
@@ -31,7 +34,7 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    const slideshows = await fetchSlideshows();
+    const slideshows = await fetchPublishedSlideshows();
     return NextResponse.json(slideshows);
   } catch (error) {
     console.error("[SLIDESHOWS_GET]", error);

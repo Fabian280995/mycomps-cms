@@ -34,6 +34,10 @@ module.exports = {
         dark: "0 2px 3px rgb(0 0 0 / 0.7)",
         "dark-sm": "0 1px 2px rgb(0 0 0 / 0.7)",
       },
+      shadow: {
+        dark: "0 2px 3px rgb(0 0 0 / 0.7)",
+        "dark-sm": "0 1px 2px rgb(0 0 0 / 0.7)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
