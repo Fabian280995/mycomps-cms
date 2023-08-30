@@ -32,6 +32,7 @@ const ImageCard = ({ image, onDelete, onSelect, selected, loading }: Props) => {
           src={image.url}
           alt={image.url}
           fill
+          sizes="100%"
           priority
           className="object-cover object-center"
         />

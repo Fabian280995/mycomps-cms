@@ -121,7 +121,7 @@ const GalleryClient = ({ images }: Props) => {
           />
         ) : null}
       </AnimatePresence>
-      <div className="max-w-5xl mx-auto mt-4 space-y-4">
+      <div className="max-w-5xl mx-auto mt-4 space-y-4 mb-14">
         <div className="flex gap-x-8 items-center">
           <p className="text-xl font-semibold text-gray-400 items-center">
             Selected Pictures: {selectedImages.length}

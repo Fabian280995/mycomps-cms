@@ -36,3 +36,22 @@ export const fetchSport = async (id: string) => {
     await prismadb.$disconnect();
   }
 };
+
+export const fetchSportsWithImage = async () => {
+  try {
+    const sports = await prismadb.sport.findMany({
+      orderBy: {
+        name: "asc",
+      },
+      include: {
+        image: true,
+      },
+    });
+    return sports;
+  } catch (error) {
+    throw error;
+  } finally {
+    console.log("finally: disconnecting Sports!");
+    await prismadb.$disconnect();
+  }
+};

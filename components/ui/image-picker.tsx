@@ -23,10 +23,10 @@ const ImagePicker = ({ images, selectedImageId, onSelectImage }: Props) => {
           >
             <Image
               src={image.url}
-              layout="fill"
-              objectFit="cover"
+              fill
+              sizes="100%"
               alt={image.id}
-              className="hover:scale-110 transition-all cursor-pointer"
+              className="hover:scale-110 transition-all cursor-pointer object-cover object-center"
             />
             {selected && <div className="absolute inset-0 border-2  m-2" />}
           </div>

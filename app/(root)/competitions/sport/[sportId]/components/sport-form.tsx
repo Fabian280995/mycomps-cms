@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Sport } from "@prisma/client";
+import { Image, Sport } from "@prisma/client";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import { SaveAll, Trash } from "lucide-react";
+import { Loader, SaveAll, Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
@@ -21,16 +21,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { useParams, useRouter } from "next/navigation";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { SportValidation } from "@/lib/validations/sports";
+import ImagePicker from "@/components/ui/image-picker";
+import { fetchImages } from "@/lib/actions/images.actions";
 
 interface Props {
   initialData: Sport | null;
 }
 
+const SportValidation = z.object({
+  name: z.string().min(3).max(30),
+  imageId: z.string().optional(),
+});
+
 const SportForm: React.FC<Props> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
 
+  const [images, setImages] = useState<Image[] | null>(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -45,9 +52,15 @@ const SportForm: React.FC<Props> = ({ initialData }) => {
 
   const form = useForm<z.infer<typeof SportValidation>>({
     resolver: zodResolver(SportValidation),
-    defaultValues: initialData || {
-      name: "",
-    },
+    defaultValues: initialData
+      ? {
+          name: initialData?.name || "",
+          imageId: initialData?.imageId || "",
+        }
+      : {
+          name: "",
+          imageId: "",
+        },
   });
 
   const onSubmit = async (data: z.infer<typeof SportValidation>) => {
@@ -84,6 +97,21 @@ const SportForm: React.FC<Props> = ({ initialData }) => {
       setOpen(false);
     }
   };
+
+  useEffect(() => {
+    async function getImages() {
+      setLoading(true);
+      try {
+        const images = await fetchImages();
+        setImages(images);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getImages();
+  }, []);
 
   return (
     <div className="bg-white rounded-xl shadow-md px-10 py-12 mx-2">
@@ -131,6 +159,30 @@ const SportForm: React.FC<Props> = ({ initialData }) => {
                 <FormMessage />
               </FormItem>
             )}
+          />
+          <FormField
+            control={form.control}
+            name="imageId"
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormLabel>Wähle ein passendes Bild aus!</FormLabel>
+                  <FormControl>
+                    {loading ? (
+                      <div className="p-2">
+                        <Loader className="w-6 h-6 animate-spin" />
+                      </div>
+                    ) : (
+                      <ImagePicker
+                        images={images}
+                        selectedImageId={field.value || ""}
+                        onSelectImage={field.onChange}
+                      />
+                    )}
+                  </FormControl>
+                </FormItem>
+              );
+            }}
           />
           <div className="flex justify-end">
             <Button

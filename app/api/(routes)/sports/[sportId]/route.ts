@@ -39,7 +39,7 @@ export async function PATCH(
   try {
     const { userId } = auth();
     const body = await req.json();
-    const { name } = body;
+    const { name, imageId } = body;
 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
 
@@ -57,6 +57,7 @@ export async function PATCH(
       },
       data: {
         name,
+        imageId,
       },
     });
     return NextResponse.json(sport);

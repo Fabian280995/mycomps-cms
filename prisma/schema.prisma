@@ -14,6 +14,8 @@ model Sport {
   id            String        @id @default(auto()) @map("_id") @db.ObjectId
   adminId       String        
   name          String
+  image         Image?           @relation(fields: [imageId], references: [id])
+  imageId       String?          @db.ObjectId
   competitions  Competition[]
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
@@ -80,6 +82,7 @@ model Image {
   adminId     String
   url         String
   slides      Slide[]
+  sports      Sport[]
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
 }
