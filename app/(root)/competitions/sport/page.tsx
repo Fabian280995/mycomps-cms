@@ -9,6 +9,7 @@ export default async function SportPage() {
   const formattedSports = sports.map((sport) => ({
     id: sport.id,
     name: sport.name,
+    category: sport.category,
     createdAt: new Date(sport.createdAt).toLocaleDateString(),
     image:
       {
@@ -18,7 +19,7 @@ export default async function SportPage() {
   }));
 
   return (
-    <section className="w-full space-y-4 px-16 py-20">
+    <section className="w-full flex flex-col px-12 py-8 pb-20 overflow-y-scroll">
       <PageHeader title="Sport" subtitle="Übersicht aller Sportarten">
         <AddButton destination="competitions/sport" name="Sportart" />
       </PageHeader>

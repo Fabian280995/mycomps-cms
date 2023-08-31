@@ -18,8 +18,8 @@ export const SportsClient: React.FC<SportsClientProps> = ({ data }) => {
   if (!isMounted) return null;
 
   return (
-    <>
+    <div className="h-full mb-[10rem]">
       <DataTable columns={columns} data={data} searchKey="name" />
-    </>
+    </div>
   );
 };

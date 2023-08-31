@@ -46,9 +46,9 @@ export default async function SetupLayout({
   ];
 
   return (
-    <div className="relative w-full h-full flex">
+    <div className="relative w-full flex">
       {children}
-      <div className="bottom-0 right-0 left-0 absolute flex items-center justify-center">
+      <div className="bottom-0 right-0 left-0 absolute flex items-center justify-center py-4">
         <BottomNav routes={routes} />
       </div>
     </div>

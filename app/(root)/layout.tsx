@@ -26,7 +26,7 @@ export default async function SetupLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${inter.className} bg-dark-1`}>
-          <div className="w-full h-full flex">
+          <div className="w-full h-screen flex overflow-hidden">
             <ToasterProvider />
             <Sidebar />
             {children}

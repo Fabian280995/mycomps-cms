@@ -1,4 +1,4 @@
-import { fetchSports } from "@/lib/actions/sport.actions";
+import { fetchSports, fetchSportsWithImage } from "@/lib/actions/sport.actions";
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
@@ -8,15 +8,18 @@ export async function POST(req: Request) {
     const { userId } = auth();
     const body = await req.json();
 
-    const { name, imageId } = body;
+    const { name, imageId, category } = body;
 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
-
     if (!name) return new NextResponse("Missing Name", { status: 400 });
+    if (!category) {
+      return new NextResponse("Missing category", { status: 400 });
+    }
 
     const sport = await prismadb.sport.create({
       data: {
         name,
+        category,
         imageId,
         adminId: userId,
       },
@@ -31,8 +34,7 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    const sports = await fetchSports();
-
+    const sports = await fetchSportsWithImage();
     return NextResponse.json(sports);
   } catch (error) {
     console.error("[SPORTS_GET]", error);

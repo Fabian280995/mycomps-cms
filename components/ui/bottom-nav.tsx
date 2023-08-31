@@ -33,7 +33,7 @@ const BottomNav = ({ routes }: Props) => {
   return (
     <motion.div
       className="shadow-md rounded-full max-w-prose flex gap-x-6 bg-white px-6 py-2 md:mx-auto
-      items-center justify-around mb-4 mx-2"
+      items-center justify-around"
       layout
     >
       {isMounted ? (

@@ -8,6 +8,7 @@ import CellImage from "@/components/ui/cell-image";
 export type SportColumn = {
   id: string;
   name: string;
+  category: string;
   createdAt: string;
   image: {
     id: string;
@@ -38,6 +39,10 @@ export const columns: ColumnDef<SportColumn>[] = [
         mode="main"
       />
     ),
+  },
+  {
+    accessorKey: "category",
+    header: "Category",
   },
   {
     accessorKey: "createdAt",

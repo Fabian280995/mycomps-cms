@@ -39,12 +39,15 @@ export async function PATCH(
   try {
     const { userId } = auth();
     const body = await req.json();
-    const { name, imageId } = body;
+    const { name, imageId, category } = body;
 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
 
     if (!name) {
       return new NextResponse("Missing name", { status: 400 });
+    }
+    if (!category) {
+      return new NextResponse("Missing category", { status: 400 });
     }
 
     if (!params.sportId) {
@@ -57,6 +60,7 @@ export async function PATCH(
       },
       data: {
         name,
+        category,
         imageId,
       },
     });

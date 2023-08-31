@@ -11,7 +11,7 @@ import { SportColumn } from "./columns";
 import { Button } from "@/components/ui/button";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "react-hot-toast";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
 import { AlertModal } from "@/components/modals/alert-modal";
@@ -24,7 +24,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const params = useParams();
+  const pathname = usePathname();
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
@@ -36,7 +36,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       setLoading(true);
       await axios.delete(`/api/sports/${id}`);
       router.refresh();
-      router.push(`/sport`);
+      router.back();
       toast.success("Sport deleted successfully.");
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
@@ -47,7 +47,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   };
 
   const onUpdate = (id: string) => {
-    router.push(`/sport/${id}`);
+    router.push(`${pathname}/${id}`);
   };
 
   return (

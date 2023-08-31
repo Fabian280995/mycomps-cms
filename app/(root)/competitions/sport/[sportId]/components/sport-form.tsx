@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Image, Sport } from "@prisma/client";
+import { Image, Sport, SportsCategory } from "@prisma/client";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { Loader, SaveAll, Trash } from "lucide-react";
@@ -23,6 +23,13 @@ import { useParams, useRouter } from "next/navigation";
 import { AlertModal } from "@/components/modals/alert-modal";
 import ImagePicker from "@/components/ui/image-picker";
 import { fetchImages } from "@/lib/actions/images.actions";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Props {
   initialData: Sport | null;
@@ -30,6 +37,7 @@ interface Props {
 
 const SportValidation = z.object({
   name: z.string().min(3).max(30),
+  category: z.nativeEnum(SportsCategory),
   imageId: z.string().optional(),
 });
 
@@ -55,10 +63,12 @@ const SportForm: React.FC<Props> = ({ initialData }) => {
     defaultValues: initialData
       ? {
           name: initialData?.name || "",
+          category: initialData?.category || "",
           imageId: initialData?.imageId || "",
         }
       : {
           name: "",
+          category: "STRENGTH",
           imageId: "",
         },
   });
@@ -156,6 +166,38 @@ const SportForm: React.FC<Props> = ({ initialData }) => {
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Categorie</FormLabel>
+                <Select
+                  disabled={loading}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue
+                        defaultValue={field.value}
+                        placeholder="Wähle eine Kategorie ..."
+                      ></SelectValue>
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {Object.keys(SportsCategory).map((item) => (
+                      <SelectItem key={item} value={item} className="truncate">
+                        {item}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}

@@ -11,59 +11,71 @@ datasource db {
 }
 
 model Sport {
-  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  id            String            @id @default(auto()) @map("_id") @db.ObjectId
   adminId       String        
   name          String
-  image         Image?           @relation(fields: [imageId], references: [id])
-  imageId       String?          @db.ObjectId
+  category     SportsCategory   @default(OTHER)
+  image         Image?            @relation(fields: [imageId], references: [id])
+  imageId       String?           @db.ObjectId
   competitions  Competition[]
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+}
+
+enum SportsCategory {
+  STRENGTH
+  ENDURANCE
+  COMBINED
+  WATER
+  WINTER
+  TEAM
+  MARTIALARTS
+  OTHER
 }
 
 model Location {
-  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
   adminId     String  
   name        String
   url         String
-  addressId   String?          @db.ObjectId
-  address     Address?         @relation(fields: [addressId], references: [id])
+  addressId   String?           @db.ObjectId
+  address     Address?          @relation(fields: [addressId], references: [id])
   competitions Competition[]
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
 
 model Organizer {
-  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
   adminId     String  
   name        String
   url         String
-  addressId   String?          @db.ObjectId
-  address     Address?         @relation(fields: [addressId], references: [id])
+  addressId   String?           @db.ObjectId
+  address     Address?          @relation(fields: [addressId], references: [id])
   competitions Competition[]
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
 
 model Competition {
-  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
   adminId     String  
   name        String
   description String?
   startDate   DateTime
   endDate     DateTime
-  sport       Sport           @relation(fields: [sportId], references: [id])
-  sportId     String          @db.ObjectId
-  location    Location        @relation(fields: [locationId], references: [id])
-  locationId  String          @db.ObjectId
-  organizer   Organizer       @relation(fields: [organizerId], references: [id])
-  organizerId String          @db.ObjectId
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  sport       Sport             @relation(fields: [sportId], references: [id])
+  sportId     String            @db.ObjectId
+  location    Location          @relation(fields: [locationId], references: [id])
+  locationId  String            @db.ObjectId
+  organizer   Organizer         @relation(fields: [organizerId], references: [id])
+  organizerId String            @db.ObjectId
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
 
 model Address {
-  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
   adminId     String
   street      String
   number      String
@@ -73,39 +85,39 @@ model Address {
   country     String
   organizers  Organizer[]
   locations   Location[]
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
 
 model Image {
-  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
   adminId     String
   url         String
   slides      Slide[]
   sports      Sport[]
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
 
 model Slideshow {
-  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
   adminId     String
   name        String
-  isPublished Boolean         @default(false)
+  isPublished Boolean           @default(false)
   slides      Slide[]
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
 
 model Slide {
-  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
   adminId     String
   title       String
   description String?
-  slideshow   Slideshow       @relation(fields: [slideshowId], references: [id])
-  slideshowId String          @db.ObjectId
-  image       Image           @relation(fields: [imageId], references: [id])
-  imageId     String          @db.ObjectId
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  slideshow   Slideshow         @relation(fields: [slideshowId], references: [id])
+  slideshowId String            @db.ObjectId
+  image       Image             @relation(fields: [imageId], references: [id])
+  imageId     String            @db.ObjectId
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
