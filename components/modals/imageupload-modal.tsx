@@ -6,11 +6,21 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import Image from "next/image";
 import { Loader } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { ImageFolder } from "@prisma/client";
+import axios from "axios";
+import { set } from "date-fns";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  onUpload: (files: File[]) => void;
+  onUpload: (files: File[], folderId: string) => void;
   loading: boolean;
 }
 
@@ -20,8 +30,11 @@ export const ImageUploadModal: React.FC<Props> = ({
   onUpload,
   loading,
 }) => {
+  const [loadingFolders, setLoadingFolders] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const [image, setImage] = useState<any | null>(null);
+  const [folderId, setFolderId] = useState<string>("");
+  const [folders, setFolders] = useState<ImageFolder[]>([]);
   const [isMounted, setIsMounted] = useState(false);
 
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +66,20 @@ export const ImageUploadModal: React.FC<Props> = ({
     setImage(null);
   };
 
+  const getFolders = async () => {
+    setLoadingFolders(true);
+    try {
+      const res = await axios.get(`/api/folders`);
+      setFolders(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingFolders(false);
+    }
+  };
+
   useEffect(() => {
+    getFolders();
     setIsMounted(true);
   }, []);
 
@@ -92,15 +118,48 @@ export const ImageUploadModal: React.FC<Props> = ({
           className="cursor-pointer hover:bg-gray-200"
           onChange={(e) => handleImage(e)}
         />
+        {!loadingFolders ? (
+          <div className="w-full">
+            <Select
+              disabled={loading}
+              value={folderId}
+              onValueChange={(value) => setFolderId(value)}
+              defaultValue={folderId}
+            >
+              <SelectTrigger>
+                <SelectValue
+                  defaultValue={folderId}
+                  placeholder="Wähle einen Ordner ..."
+                ></SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {folders.map((item) => (
+                  <SelectItem
+                    key={item.id}
+                    value={item.id}
+                    className="truncate"
+                  >
+                    {item.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        ) : (
+          <div className="w-full flex items-center justify-center">
+            <Loader className="w-6 h-6 animate-spin mr-2" />
+            <p className="text-gray-500">loading folder...</p>
+          </div>
+        )}
       </div>
       <div className="pt-6 space-x-2 flex items-center justify-end w-full">
         <Button disabled={loading} variant="outline" onClick={onEnd}>
           Cancel
         </Button>
         <Button
-          disabled={loading || !files.length}
+          disabled={loading || !files.length || !folderId}
           onClick={() => {
-            onUpload(files);
+            onUpload(files, folderId);
             onEnd();
           }}
           className="bg-teal-600 hover:bg-teal-900"

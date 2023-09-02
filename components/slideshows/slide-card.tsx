@@ -28,10 +28,11 @@ const SlideCard = ({ slide, onSelect, loading }: Props) => {
       {slide.image ? (
         <Image
           src={slide.image.url}
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="100%"
           alt={slide.title}
-          className="group-hover:scale-110 transition-all "
+          priority
+          className="group-hover:scale-110 transition-all object-cover object-center"
         />
       ) : (
         <div className="flex-1 flex flex-col gap-2 items-center justify-center">

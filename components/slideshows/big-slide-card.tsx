@@ -17,8 +17,6 @@ interface Props {
 const BigSlideCard = ({ slide, onEdit, onDelete, loading }: Props) => {
   const [loadingImage, setLoadingImage] = React.useState(false);
 
-  console.log("SLIDE", slide);
-
   /* React.useEffect(() => {
     async function loadImage(imageId: string) {
       setLoadingImage(true);
@@ -48,10 +46,11 @@ const BigSlideCard = ({ slide, onEdit, onDelete, loading }: Props) => {
           {slide.image ? (
             <Image
               src={slide.image.url}
-              layout="fill"
-              objectFit="cover"
+              fill
+              quality={75}
+              sizes="100%"
               alt={slide.title}
-              className="group-hover:scale-110 transition-all "
+              className="group-hover:scale-110 transition-all object-cover object-center"
             />
           ) : (
             <div className="flex-1 flex flex-col gap-2 items-center justify-center">

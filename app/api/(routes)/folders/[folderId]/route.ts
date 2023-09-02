@@ -7,23 +7,23 @@ export async function GET(
   {
     params,
   }: {
-    params: { imageId: string };
+    params: { folderId: string };
   }
 ) {
   try {
-    if (!params.imageId) {
-      return new NextResponse("Missing imageId", { status: 400 });
+    if (!params.folderId) {
+      return new NextResponse("Missing folderId", { status: 400 });
     }
 
-    const image = await prismadb.image.findUnique({
+    const imageFolder = await prismadb.imageFolder.findUnique({
       where: {
-        id: params.imageId,
+        id: params.folderId,
       },
     });
 
-    return NextResponse.json(image);
+    return NextResponse.json(imageFolder);
   } catch (error) {
-    console.log("[IMAGE_GET]", error);
+    console.log("[imageFolder_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
@@ -33,29 +33,30 @@ export async function PATCH(
   {
     params,
   }: {
-    params: { imageId: string };
+    params: { folderId: string };
   }
 ) {
   try {
     const { userId } = auth();
-    const body = await req.json();
-    const { folderId } = body;
-
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
 
-    if (!folderId) {
-      return new NextResponse("Missing url", { status: 400 });
+    const body = await req.json();
+    const { name } = body;
+
+    if (!name) {
+      return new NextResponse("Missing name", { status: 400 });
     }
 
-    const image = await prismadb.image.updateMany({
+    const imageFolder = await prismadb.imageFolder.updateMany({
       where: {
-        id: params.imageId,
+        id: params.folderId,
       },
-      data: { folderId },
+      data: { name },
     });
-    return NextResponse.json(image);
+
+    return NextResponse.json(imageFolder);
   } catch (error) {
-    console.log("[IMAGE_PATCH]", error);
+    console.log("[imageFolder_PATCH]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
@@ -65,7 +66,7 @@ export async function DELETE(
   {
     params,
   }: {
-    params: { imageId: string };
+    params: { folderId: string };
   }
 ) {
   try {
@@ -73,19 +74,19 @@ export async function DELETE(
 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
 
-    if (!params.imageId) {
-      return new NextResponse("Missing imageId", { status: 400 });
+    if (!params.folderId) {
+      return new NextResponse("Missing folderId", { status: 400 });
     }
 
-    const image = await prismadb.image.deleteMany({
+    const imageFolder = await prismadb.imageFolder.deleteMany({
       where: {
-        id: params.imageId,
+        id: params.folderId,
       },
     });
 
-    return NextResponse.json(image);
+    return NextResponse.json(imageFolder);
   } catch (error) {
-    console.log("[IMAGE_DELETE]", error);
+    console.log("[imageFolder_DELETE]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }

@@ -21,7 +21,8 @@ const SmallImageSlider = ({ slides }: Props) => {
       <Image
         src={slides[slideIndex].image.url}
         alt={slides[slideIndex].title}
-        layout="fill"
+        fill
+        sizes="100%"
         objectFit="cover"
       />
     </div>

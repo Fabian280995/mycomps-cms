@@ -1,11 +1,10 @@
 "use client";
+import React, { useEffect } from "react";
 import { Prisma } from "@prisma/client";
 import { Pause, Play, Rat } from "lucide-react";
-import Image from "next/image";
-import React, { useEffect } from "react";
-import AddButton from "../ui/add-button";
+
 import { Button } from "../ui/button";
-import { AnimatePresence, motion, useAnimationControls } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import Slide from "./slide";
 
 const publishedSlideshow = Prisma.validator<Prisma.SlideshowDefaultArgs>()({
@@ -52,14 +51,7 @@ const Slideshow = ({ slideshow }: Props) => {
             if (index !== currentSlideIndex) {
               return null;
             }
-            return (
-              <Slide
-                key={slide.id}
-                slide={slide}
-                autoSliderActive={autoSliderActive}
-                duration={DELAY}
-              />
-            );
+            return <Slide key={slide.id} slide={slide} />;
           })}
           {slideshow.slides.length > 1 ? (
             <div

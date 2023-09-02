@@ -7,36 +7,42 @@ export async function POST(req: Request) {
     const { userId } = auth();
 
     const body = await req.json();
-    const { url, folderId } = body;
+    const { name } = body;
 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
 
-    if (!url) {
-      return new NextResponse("Missing url", { status: 400 });
+    if (!name) {
+      return new NextResponse("Missing name", { status: 400 });
     }
 
-    const image = await prismadb.image.create({
+    const imageFolder = await prismadb.imageFolder.create({
       data: {
-        url,
-        folderId,
+        name,
         adminId: userId,
       },
     });
 
-    return NextResponse.json(image);
+    return NextResponse.json(imageFolder);
   } catch (error) {
-    console.error("[IMAGES_POST]", error);
+    console.error("[IMAGEFOLDER_POST]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
 
 export async function GET(req: Request) {
   try {
-    const images = await prismadb.image.findMany();
+    const { userId } = auth();
+    if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
 
-    return NextResponse.json(images);
+    const imageFolder = await prismadb.imageFolder.findMany({
+      where: {
+        adminId: userId,
+      },
+    });
+
+    return NextResponse.json(imageFolder);
   } catch (error) {
-    console.error("[IMAGES_GET]", error);
+    console.error("[IMAGEFOLDER_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }

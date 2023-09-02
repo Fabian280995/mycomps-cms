@@ -45,7 +45,6 @@ const SportForm: React.FC<Props> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
 
-  const [images, setImages] = useState<Image[] | null>(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -108,21 +107,6 @@ const SportForm: React.FC<Props> = ({ initialData }) => {
     }
   };
 
-  useEffect(() => {
-    async function getImages() {
-      setLoading(true);
-      try {
-        const images = await fetchImages();
-        setImages(images);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getImages();
-  }, []);
-
   return (
     <div className="bg-white rounded-xl shadow-md px-10 py-12 mx-2">
       <AlertModal
@@ -142,6 +126,7 @@ const SportForm: React.FC<Props> = ({ initialData }) => {
             size="icon"
             onClick={() => setOpen(true)}
             disabled={loading}
+            type="button"
           >
             <Trash className="w-4 h-4" />
           </Button>
@@ -216,9 +201,9 @@ const SportForm: React.FC<Props> = ({ initialData }) => {
                       </div>
                     ) : (
                       <ImagePicker
-                        images={images}
                         selectedImageId={field.value || ""}
                         onSelectImage={field.onChange}
+                        defaultFolder="icons"
                       />
                     )}
                   </FormControl>

@@ -6,9 +6,11 @@ const SportPage = async ({ params }: { params: { sportId: string } }) => {
   const sport = await fetchSport(params.sportId);
 
   return (
-    <div className="w-full mt-20 max-w-3xl mx-auto">
-      <SportForm initialData={sport} />
-    </div>
+    <section className="w-full overflow-y-auto">
+      <div className=" max-w-3xl my-24 mx-auto overflow-y-auto">
+        <SportForm initialData={sport} />
+      </div>
+    </section>
   );
 };
 

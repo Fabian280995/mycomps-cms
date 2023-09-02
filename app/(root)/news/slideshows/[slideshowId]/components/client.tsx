@@ -106,7 +106,7 @@ const SlideshowClient = ({ slideshow, slides }: Props) => {
         <div className="flex justify-between items-end">
           <h1 className="font-bold text-2xl">{slideshow.name}</h1>
           <div className="flex items-center gap-2">
-            <Button onClick={onCreateNewSlide} disabled={loading}>
+            <Button onClick={onCreateNewSlide} disabled={loading} type="button">
               Add a Slide <Plus className="w-6 h-6 ml-2" />
             </Button>
           </div>

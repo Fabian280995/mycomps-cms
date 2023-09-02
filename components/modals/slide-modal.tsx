@@ -19,7 +19,6 @@ import { SlideValidation } from "@/lib/validations/slideshows";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Textarea } from "../ui/textarea";
-import { fetchImages } from "@/lib/actions/images.actions";
 import ImagePicker from "../ui/image-picker";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -41,7 +40,6 @@ const SlideModal = ({
   slideshowId,
 }: Props) => {
   const [loading, setLoading] = React.useState(false);
-  const [images, setImages] = React.useState<Image[] | null>(null);
 
   const title = initialData ? "Edit the Slide" : "Create a new Slide";
   const action = initialData ? "Edit" : "Create";
@@ -69,7 +67,6 @@ const SlideModal = ({
   };
 
   useEffect(() => {
-    console.log("INITIAL DATA: ", initialData);
     if (initialData) {
       form.reset({
         title: initialData.title,
@@ -107,21 +104,6 @@ const SlideModal = ({
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    async function getImages() {
-      setLoading(true);
-      try {
-        const images = await fetchImages();
-        setImages(images);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getImages();
-  }, []);
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title={title}>
@@ -179,7 +161,6 @@ const SlideModal = ({
                       </div>
                     ) : (
                       <ImagePicker
-                        images={images}
                         selectedImageId={field.value}
                         onSelectImage={field.onChange}
                       />
