@@ -12,16 +12,16 @@ export async function POST(req: Request) {
       description,
       startDate,
       endDate,
+      logoId,
       sportId,
       locationId,
       organizerId,
+      isPublished,
     } = body;
 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
 
     if (!name) return new NextResponse("Missing Name", { status: 400 });
-    if (!description)
-      return new NextResponse("Missing Description", { status: 400 });
     if (!startDate)
       return new NextResponse("Missing StartDate", { status: 400 });
     if (!endDate) return new NextResponse("Missing EndDate", { status: 400 });
@@ -31,6 +31,8 @@ export async function POST(req: Request) {
     if (!organizerId)
       return new NextResponse("Missing OrganizerId", { status: 400 });
 
+    console.log("POST_COMPETITION_BODY:", body);
+
     const competition = await prismadb.competition.create({
       data: {
         name,
@@ -38,9 +40,11 @@ export async function POST(req: Request) {
         description,
         startDate,
         endDate,
+        logoId,
         sportId,
         locationId,
         organizerId,
+        isPublished,
       },
     });
 
@@ -53,7 +57,40 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    const competitions = await prismadb.competition.findMany();
+    const { searchParams } = new URL(req.url);
+    const startDate = searchParams.get("startDate") || undefined;
+    const endDate = searchParams.get("endDate") || undefined;
+    const sportId = searchParams.get("sportId") || undefined;
+    const locationId = searchParams.get("locationId") || undefined;
+    const organizerId = searchParams.get("organizerId") || undefined;
+
+    const competitions = await prismadb.competition.findMany({
+      where: {
+        startDate:
+          startDate && endDate
+            ? { gte: new Date(startDate), lte: new Date(endDate) }
+            : startDate
+            ? { gte: new Date(startDate) }
+            : undefined,
+        sportId,
+        locationId,
+        organizerId,
+        isPublished: true,
+      },
+      include: {
+        sport: true,
+        location: {
+          include: {
+            address: true,
+          },
+        },
+        organizer: true,
+        logo: true,
+      },
+      orderBy: {
+        startDate: "asc",
+      },
+    });
 
     return NextResponse.json(competitions);
   } catch (error) {

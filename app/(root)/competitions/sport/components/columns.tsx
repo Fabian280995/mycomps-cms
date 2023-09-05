@@ -17,7 +17,7 @@ export type SportColumn = {
 };
 
 export const columns: ColumnDef<SportColumn>[] = [
-  {
+  /* {
     accessorKey: "image",
     header: "Image",
     cell: ({ row }) => (
@@ -28,7 +28,7 @@ export const columns: ColumnDef<SportColumn>[] = [
         }}
       />
     ),
-  },
+  }, */
   {
     accessorKey: "name",
     header: "Name",
@@ -37,6 +37,7 @@ export const columns: ColumnDef<SportColumn>[] = [
         url={`/sport/${row.original.id}`}
         name={row.original.name}
         mode="main"
+        imageSrc={row.original.image?.url || ""}
       />
     ),
   },

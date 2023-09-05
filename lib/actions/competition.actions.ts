@@ -4,9 +4,10 @@ export const fetchCompetitions = async () => {
   try {
     const competitions = await prismadb.competition.findMany({
       orderBy: {
-        name: "asc",
+        startDate: "asc",
       },
       include: {
+        logo: true,
         sport: true,
         location: true,
         organizer: true,

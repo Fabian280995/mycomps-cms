@@ -14,6 +14,8 @@ export default async function CompetitionsPage() {
         ? ` - ${competition.endDate.toLocaleDateString()}`
         : ""
     }`,
+    imageId: competition.logoId as string,
+    imageSrc: competition.logo?.url as string,
     sportId: competition.sportId,
     sportName: competition.sport.name,
     locationId: competition.locationId,
@@ -21,6 +23,7 @@ export default async function CompetitionsPage() {
     organizerId: competition.organizerId,
     organizerName: competition.organizer.name,
     createdAt: new Date(competition.createdAt).toLocaleDateString(),
+    isPublished: competition.isPublished,
   }));
 
   return (

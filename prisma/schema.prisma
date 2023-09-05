@@ -64,6 +64,9 @@ model Competition {
   description String?
   startDate   DateTime
   endDate     DateTime
+  isPublished Boolean           @default(false)
+  logo        Image?            @relation(fields: [logoId], references: [id])
+  logoId      String?           @db.ObjectId
   sport       Sport             @relation(fields: [sportId], references: [id])
   sportId     String            @db.ObjectId
   location    Location          @relation(fields: [locationId], references: [id])
@@ -95,6 +98,7 @@ model Image {
   url         String
   slides      Slide[]
   sports      Sport[]
+  competitions Competition[]
   folder      ImageFolder?      @relation(fields: [folderId], references: [id])
   folderId    String?           @db.ObjectId @default("default")
   createdAt   DateTime          @default(now())

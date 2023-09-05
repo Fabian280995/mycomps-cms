@@ -3,11 +3,14 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 import { CellLink } from "../../../../components/ui/cell-link";
+import { Switch } from "@/components/ui/switch";
 
 export type CompetitionColumn = {
   id: string;
   name: string;
   date: string;
+  imageId: string;
+  imageSrc: string;
   sportId: string;
   sportName: string;
   locationId: string;
@@ -15,9 +18,15 @@ export type CompetitionColumn = {
   organizerId: string;
   organizerName: string;
   createdAt: string;
+  isPublished: boolean;
 };
 
 export const columns: ColumnDef<CompetitionColumn>[] = [
+  {
+    accessorKey: "isPublished",
+    header: "Veröffentlicht",
+    cell: ({ row }) => <Switch checked={row.original.isPublished} />,
+  },
   {
     accessorKey: "name",
     header: "Name",
@@ -26,6 +35,7 @@ export const columns: ColumnDef<CompetitionColumn>[] = [
         url={`/competitions/${row.original.id}`}
         name={row.original.name}
         mode="main"
+        imageSrc={row.original.imageSrc}
       />
     ),
   },

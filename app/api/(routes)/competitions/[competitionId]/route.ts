@@ -49,9 +49,11 @@ export async function PATCH(
       description,
       startDate,
       endDate,
+      logoId,
       sportId,
       locationId,
       organizerId,
+      isPublished,
     } = body;
 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
@@ -79,18 +81,20 @@ export async function PATCH(
       return new NextResponse("Missing competitionId", { status: 400 });
     }
 
+    console.log("PATCH_COMPETITION_BODY:", body);
     const competition = await prismadb.competition.updateMany({
       where: {
         id: params.competitionId,
       },
       data: {
-        name,
         description,
         startDate,
         endDate,
+        logoId,
         sportId,
         locationId,
         organizerId,
+        isPublished,
       },
     });
     return NextResponse.json(competition);
