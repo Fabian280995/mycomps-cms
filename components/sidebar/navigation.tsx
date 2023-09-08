@@ -4,6 +4,7 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import {
+  Atom,
   Dumbbell,
   Home,
   Image,
@@ -64,6 +65,12 @@ export function Navigation({
       href: `/settings`,
       label: "Settings",
       active: pathname === `/settings`,
+    },
+    {
+      icon: <Atom className="w-6 h-6 " />,
+      href: `/labor`,
+      label: "Labor",
+      active: pathname === `/labor`,
     },
   ];
 

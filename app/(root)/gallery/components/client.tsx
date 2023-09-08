@@ -4,12 +4,10 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { AnimatePresence } from "framer-motion";
-import { FolderPlus, ImagePlus, Trash2 } from "lucide-react";
+import { Ban, FolderPlus, ImagePlus, Trash2 } from "lucide-react";
 
 import { useUploadThing } from "@/lib/uploadthing";
-import { Image as PrismaImage } from "@prisma/client";
 
-import { AlertModal } from "@/components/modals/alert-modal";
 import { ImageUploadModal } from "@/components/modals/imageupload-modal";
 import { Button } from "@/components/ui/button";
 import UploadToast from "@/components/ui/upload-toast";
@@ -34,7 +32,7 @@ const GalleryClient = ({ folders }: Props) => {
   const cardFolders = folders.map((folder) => ({
     id: folder.id,
     name: folder.name,
-    image: { url: folder.images[0]?.url },
+    images: folder.images,
     createdAt: folder.createdAt.toLocaleDateString(),
   }));
 
@@ -64,6 +62,7 @@ const GalleryClient = ({ folders }: Props) => {
     if (imgRes && imgRes[0].url) {
       await axios.post(`/api/images`, {
         url: imgRes[0].url,
+        key: imgRes[0].key,
         folderId,
       });
     }

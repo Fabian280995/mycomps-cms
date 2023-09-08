@@ -3,7 +3,9 @@ import { AlertModal } from "@/components/modals/alert-modal";
 import SlideModal from "@/components/modals/slide-modal";
 import BigSlideCard from "@/components/slideshows/big-slide-card";
 import SlideCard, { SlideWithImage } from "@/components/slideshows/slide-card";
+import SlideshowHeader from "@/components/slideshows/slideshow-header";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { fetchImage } from "@/lib/actions/images.actions";
 import { Image as PrismaImage, Slideshow } from "@prisma/client";
 import axios from "axios";
@@ -28,7 +30,7 @@ const SlideshowClient = ({ slideshow, slides }: Props) => {
 
   const router = useRouter();
 
-  const onCreateNewSlide = () => {
+  const handleCreateNewSlide = () => {
     setCurrentSlide(null);
     setModalOpen(true);
   };
@@ -103,14 +105,13 @@ const SlideshowClient = ({ slideshow, slides }: Props) => {
         slideshowId={slideshow.id}
       />
       <div className="space-y-4 pb-32">
-        <div className="flex justify-between items-end">
-          <h1 className="font-bold text-2xl">{slideshow.name}</h1>
-          <div className="flex items-center gap-2">
-            <Button onClick={onCreateNewSlide} disabled={loading} type="button">
-              Add a Slide <Plus className="w-6 h-6 ml-2" />
-            </Button>
-          </div>
-        </div>
+        <SlideshowHeader
+          id={slideshow.id}
+          title={slideshow.name}
+          isPublished={slideshow.isPublished}
+          onCreateNewSlide={handleCreateNewSlide}
+          loading={loading}
+        />
         <div className="relative w-full border aspect-[16/9] rounded-xl overflow-hidden">
           {!loading ? (
             <>

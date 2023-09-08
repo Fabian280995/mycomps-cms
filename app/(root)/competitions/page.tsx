@@ -27,7 +27,7 @@ export default async function CompetitionsPage() {
   }));
 
   return (
-    <section className="w-full px-16 py-20">
+    <section className="w-full flex flex-col px-12 py-8 pb-20 overflow-y-scroll">
       <PageHeader title="Competitions" subtitle="Übersicht aller Wttkämpfe">
         <AddButton destination="competitions" name="Wettkampf" />
       </PageHeader>

@@ -49,8 +49,8 @@ interface Props {
 }
 
 export const CompetitionValidation = z.object({
-  name: z.string().min(3).max(30),
-  description: z.string().min(3).max(1000).optional(),
+  name: z.string().min(3).max(255),
+  description: z.string().min(3).max(1240).optional(),
   startDate: z.date(),
   endDate: z.date().optional(),
   logoId: z.string().optional(),

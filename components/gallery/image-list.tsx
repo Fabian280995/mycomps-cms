@@ -4,7 +4,7 @@ import React from "react";
 import { AlertModal } from "../modals/alert-modal";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import ImageCard from "./image-card";
 import { Button } from "../ui/button";
 import { FolderSymlink, Loader, Trash } from "lucide-react";
@@ -23,6 +23,7 @@ const ImageList = ({ images }: Props) => {
   const [moveModalOpen, setMoveModalOpen] = React.useState(false);
 
   const router = useRouter();
+  const params = useParams();
 
   const onSelectImage = (image: Image) => {
     if (selectedImages.includes(image)) {
@@ -32,22 +33,23 @@ const ImageList = ({ images }: Props) => {
     }
   };
 
-  const onDeleteSelectedImages = (ids: string[]) => {
+  const onDeleteSelectedImages = (images: Image[]) => {
     setLoading(true);
-    ids.forEach(async (id) => {
-      const res = await axios.delete(`/api/images/${id}`);
-      console.log("Response: ", res);
+    images.forEach(async (img) => {
+      const res = await axios.delete(`/api/images/${img.id}`, {
+        data: { key: img.key },
+      });
       if (res.status !== 200) {
         toast.error(
           "Something went wrong... Please make sure to first remove all Slides using these images!"
         );
       } else {
-        toast.success("Image deleted! " + id);
+        toast.success("Image deleted! " + img);
       }
     });
     setSelectedImages([]);
     setAlertOpen(false);
-    router.refresh();
+    router.push(`/gallery/${params.folderId}`);
     setLoading(false);
   };
 
@@ -56,9 +58,7 @@ const ImageList = ({ images }: Props) => {
       <AlertModal
         isOpen={alertOpen}
         onClose={() => setAlertOpen(false)}
-        onConfirm={() =>
-          onDeleteSelectedImages(selectedImages.map((img) => img.id))
-        }
+        onConfirm={() => onDeleteSelectedImages(selectedImages)}
         loading={loading}
       />
       {moveModalOpen && (

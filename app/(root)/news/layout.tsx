@@ -43,7 +43,7 @@ export default async function SetupLayout({
   return (
     <div className="relative w-full h-full flex">
       <div className="overflow-y-auto flex-1">{children}</div>
-      <div className="absolute bottom-0 right-0 left-0 flex items-center justify-center">
+      <div className="absolute bottom-4 right-0 left-0 flex items-center justify-center">
         <BottomNav routes={routes} />
       </div>
     </div>

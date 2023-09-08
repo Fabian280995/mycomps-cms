@@ -37,13 +37,14 @@ const ImageActions = ({ data }: Props) => {
     toast.success(`${id}: ID copied to clipboard`);
   };
 
-  const onDelete = async (id: string) => {
+  const onDelete = async (id: string, key: string) => {
     try {
       setLoading(true);
-      await axios.delete(`/api/images/${id}`);
-      router.refresh();
-      router.back();
+      await axios.delete(`/api/images/${id}`, {
+        data: { key },
+      });
       toast.success("Image deleted successfully.");
+      router.refresh();
     } catch (error) {
       toast.error(
         "Something went wrong. Please make sure to delete all Slides using this Image first!"
@@ -63,7 +64,7 @@ const ImageActions = ({ data }: Props) => {
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={() => onDelete(data.id)}
+        onConfirm={() => onDelete(data.id, data.key)}
         loading={loading}
       />
       <DropdownMenu>

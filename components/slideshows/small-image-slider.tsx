@@ -17,13 +17,13 @@ const SmallImageSlider = ({ slides }: Props) => {
   }, []);
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full relative">
       <Image
         src={slides[slideIndex].image.url}
         alt={slides[slideIndex].title}
         fill
         sizes="100%"
-        objectFit="cover"
+        className="object-cover object-center"
       />
     </div>
   );

@@ -78,7 +78,11 @@ export const fetchFoldersWithImages = async () => {
   try {
     const foldersWithImages = await prismadb.imageFolder.findMany({
       include: {
-        images: true,
+        images: {
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
       },
       orderBy: {
         name: "asc",

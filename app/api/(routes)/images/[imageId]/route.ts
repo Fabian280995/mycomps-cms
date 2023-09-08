@@ -1,6 +1,7 @@
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import { utapi } from "uploadthing/server";
 
 export async function GET(
   _req: Request, // Unused, params has to be second argument
@@ -61,7 +62,7 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  _req: Request, // Unused, params has to be second argument
+  req: Request,
   {
     params,
   }: {
@@ -70,11 +71,22 @@ export async function DELETE(
 ) {
   try {
     const { userId } = auth();
-
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
+
+    const body = await req.json();
+    const { key } = body;
 
     if (!params.imageId) {
       return new NextResponse("Missing imageId", { status: 400 });
+    }
+    if (!key) return new NextResponse("Missing key", { status: 400 });
+
+    const result = await utapi.deleteFiles(key);
+
+    console.log("[UTAPI_DELETE]", result);
+
+    if (!result) {
+      return new NextResponse("Internal error", { status: 500 });
     }
 
     const image = await prismadb.image.deleteMany({

@@ -92,11 +92,16 @@ const ImagePicker = ({
               ></SelectValue>
             </SelectTrigger>
             <SelectContent>
-              {folders.map((item) => (
-                <SelectItem key={item.id} value={item.id} className="truncate">
-                  {item.name}
-                </SelectItem>
-              ))}
+              {folders &&
+                folders.map((item) => (
+                  <SelectItem
+                    key={item.id}
+                    value={item.id}
+                    className="truncate"
+                  >
+                    {item.name}
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
         </div>

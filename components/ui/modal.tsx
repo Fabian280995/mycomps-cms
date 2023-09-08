@@ -34,8 +34,10 @@ export const Modal: React.FC<ModalProps> = ({
       <DialogContent>
         {title || description ? (
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-            <DialogDescription>{description}</DialogDescription>
+            <DialogTitle className="text-left">{title}</DialogTitle>
+            <DialogDescription className="text-left">
+              {description}
+            </DialogDescription>
           </DialogHeader>
         ) : null}
 

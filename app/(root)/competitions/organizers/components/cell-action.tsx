@@ -34,9 +34,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onDelete = async (id: string) => {
     try {
       setLoading(true);
-      await axios.delete(`/api/organizer/${id}`);
+      await axios.delete(`/api/organizers/${id}`);
       router.refresh();
-      router.push(`/organizers`);
       toast.success("Organizer deleted successfully.");
     } catch (error) {
       toast.error("Something went wrong. Please try again.");

@@ -8,14 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import {
-  Copy,
-  Donut,
-  Edit,
-  FolderOpen,
-  MoreHorizontal,
-  Trash,
-} from "lucide-react";
+import { Copy, Edit, FolderOpen, MoreHorizontal, Trash } from "lucide-react";
 import { Button } from "../ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -69,7 +62,7 @@ const FolderActions = ({ data }: Props) => {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <span className="sr-only">Open menu</span>
-            <Donut className="h-6 w-6 text-gray-700" />
+            <MoreHorizontal className="h-6 w-6 text-gray-700" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

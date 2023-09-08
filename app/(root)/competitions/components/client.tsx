@@ -18,8 +18,8 @@ export const CompetitionsClient: React.FC<Props> = ({ data }) => {
   if (!isMounted) return null;
 
   return (
-    <>
+    <div className="h-full mb-[10rem]">
       <DataTable columns={columns} data={data} searchKey="name" />
-    </>
+    </div>
   );
 };

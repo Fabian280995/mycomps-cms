@@ -21,7 +21,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { useParams, useRouter } from "next/navigation";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { OrganizerValidation } from "@/lib/validations/organizers";
 import {
   Select,
   SelectContent,
@@ -34,6 +33,12 @@ interface Props {
   initialData: Organizer | null;
   addresses: Address[];
 }
+
+export const OrganizerValidation = z.object({
+  name: z.string().min(3).max(255),
+  url: z.string().min(3).max(255),
+  addressId: z.string().min(4),
+});
 
 const OrganizerForm: React.FC<Props> = ({ initialData, addresses }) => {
   const params = useParams();

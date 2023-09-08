@@ -7,17 +7,21 @@ export async function POST(req: Request) {
     const { userId } = auth();
 
     const body = await req.json();
-    const { url, folderId } = body;
+    const { url, folderId, key } = body;
 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
 
     if (!url) {
       return new NextResponse("Missing url", { status: 400 });
     }
+    if (!key) {
+      return new NextResponse("Missing key", { status: 400 });
+    }
 
     const image = await prismadb.image.create({
       data: {
         url,
+        key,
         folderId,
         adminId: userId,
       },
@@ -32,7 +36,11 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    const images = await prismadb.image.findMany();
+    const images = await prismadb.image.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
 
     return NextResponse.json(images);
   } catch (error) {

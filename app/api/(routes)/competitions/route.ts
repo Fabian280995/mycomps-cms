@@ -78,7 +78,15 @@ export async function GET(req: Request) {
         isPublished: true,
       },
       include: {
-        sport: true,
+        sport: {
+          include: {
+            image: {
+              select: {
+                url: true,
+              },
+            },
+          },
+        },
         location: {
           include: {
             address: true,

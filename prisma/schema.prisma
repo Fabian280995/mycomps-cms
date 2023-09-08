@@ -94,6 +94,7 @@ model Address {
 
 model Image {
   id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  key         String            @default("no-key")
   adminId     String
   url         String
   slides      Slide[]
@@ -129,7 +130,7 @@ model Slide {
   adminId     String
   title       String
   description String?
-  slideshow   Slideshow         @relation(fields: [slideshowId], references: [id])
+  slideshow   Slideshow         @relation(fields: [slideshowId], references: [id], onDelete: Cascade)
   slideshowId String            @db.ObjectId
   image       Image             @relation(fields: [imageId], references: [id])
   imageId     String            @db.ObjectId
