@@ -1,15 +1,4 @@
-import "../globals.css";
-import "@uploadthing/react/styles.css";
-
-import { ClerkProvider } from "@clerk/nextjs";
-import { Inter } from "next/font/google";
-
-export const metadata = {
-  title: "mycomps - cms",
-  description: "CMS for mycomps by Fabian Lessmann",
-};
-
-const inter = Inter({ subsets: ["latin"] });
+import { ToasterProvider } from "@/providers/toast-provider";
 
 export default function AuthLayout({
   children,
@@ -17,14 +6,9 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={`${inter.className} bg-dark-1`}>
-          <div className="w-full flex justify-center items-center min-h-screen">
-            {children}
-          </div>
-        </body>
-      </html>
-    </ClerkProvider>
+    <div className="w-full flex justify-center items-center min-h-screen">
+      <ToasterProvider />
+      {children}
+    </div>
   );
 }

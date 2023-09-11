@@ -13,16 +13,18 @@ interface Props {
   slide: SlideWithImage;
   onSelect: () => void;
   loading: boolean;
+  selected: boolean;
 }
 
-const SlideCard = ({ slide, onSelect, loading }: Props) => {
+const SlideCard = ({ slide, onSelect, loading, selected }: Props) => {
   const handleClick = () => {
     if (loading) return;
     onSelect();
   };
   return (
     <div
-      className="relative group flex w-full rounded-md aspect-[16/9] overflow-hidden bg-white shadow-md cursor-pointer"
+      className={`relative group flex w-full rounded-md aspect-[16/9] overflow-hidden bg-white shadow-md cursor-pointer
+      ${selected ? "ring-2 ring-teal-500 ring-offset-2" : "ring-0"}`}
       onClick={handleClick}
     >
       {slide.image ? (

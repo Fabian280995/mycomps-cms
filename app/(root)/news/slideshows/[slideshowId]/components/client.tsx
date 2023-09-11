@@ -140,16 +140,18 @@ const SlideshowClient = ({ slideshow, slides }: Props) => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {slides && slides.length ? (
-            <>
-              {slides.map((slide) => (
+            slides.map((slide) => {
+              const selected = currentSlide?.id === slide.id;
+              return (
                 <SlideCard
                   key={slide.id}
                   slide={slide}
                   onSelect={() => setCurrentSlide(slide)}
                   loading={loading}
+                  selected={selected}
                 />
-              ))}
-            </>
+              );
+            })
           ) : (
             <div className="w-full p-2 text-center">
               <p className="text-gray-400">no slides yet...</p>

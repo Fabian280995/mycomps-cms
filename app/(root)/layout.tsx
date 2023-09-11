@@ -1,38 +1,29 @@
-import "../globals.css";
-import "@uploadthing/react/styles.css";
-
-import { ClerkProvider } from "@clerk/nextjs";
-import { Inter } from "next/font/google";
-
 import Sidebar from "@/components/sidebar";
+import prismadb from "@/lib/prismadb";
 
 import { ToasterProvider } from "@/providers/toast-provider";
+import { currentUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
-export const metadata = {
-  title: "mycomps - cms",
-  description: "CMS for mycomps by Fabian Lessmann",
-};
-
-const inter = Inter({ subsets: ["latin"] });
-
-export default async function SetupLayout({
+export default async function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
   params: { storeId: string };
 }) {
+  const user = await currentUser();
+  if (!user) redirect("/sign-in");
+
+  const userInfo = await prismadb.user.findUnique({
+    where: { clerkId: user.id },
+  });
+  if (!userInfo?.onboarded) redirect("/onboarding");
+
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={`${inter.className} bg-dark-1`}>
-          <div className="w-full h-screen flex overflow-hidden">
-            <ToasterProvider />
-            <Sidebar />
-            {children}
-          </div>
-        </body>
-      </html>
-    </ClerkProvider>
+    <div className="w-full h-screen flex overflow-hidden">
+      <ToasterProvider />
+      <Sidebar />
+      {children}
+    </div>
   );
 }

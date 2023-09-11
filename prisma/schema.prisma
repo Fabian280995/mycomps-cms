@@ -10,6 +10,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String            @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId   String            @unique
+  email     String            @unique
+  firstName String
+  lastName  String
+  role      UserRole          @default(USER)
+  onboarded Boolean           @default(false)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
 model Sport {
   id            String            @id @default(auto()) @map("_id") @db.ObjectId
   adminId       String        
