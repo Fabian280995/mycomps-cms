@@ -154,3 +154,31 @@ model Slide {
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
 }
+
+
+model ApiCall {
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  method      ApiMethod         @default(UNKNOWN)
+  origin      String
+  url         String
+  mode        String
+  credentials String
+  header_date String
+  connection  String
+  protocol    String
+  host        String
+  pathname    String
+  port        String
+  searchParams String
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+enum ApiMethod {
+  GET
+  POST
+  PUT
+  PATCH
+  DELETE
+  UNKNOWN
+}

@@ -1,3 +1,4 @@
+import { createApiCall } from "@/lib/actions/apiCalls.actions";
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
@@ -100,9 +101,13 @@ export async function GET(req: Request) {
       },
     });
 
+    // await createApiCall({ req });
+
     return NextResponse.json(competitions);
   } catch (error) {
     console.error("[COMPETITIONS_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
+  } finally {
+    await prismadb.$disconnect();
   }
 }

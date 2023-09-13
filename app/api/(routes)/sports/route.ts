@@ -1,3 +1,4 @@
+import { createApiCall } from "@/lib/actions/apiCalls.actions";
 import { fetchSports, fetchSportsWithImage } from "@/lib/actions/sport.actions";
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
@@ -25,6 +26,8 @@ export async function POST(req: Request) {
       },
     });
 
+    await createApiCall({ req });
+
     return NextResponse.json(sport);
   } catch (error) {
     console.error("[SPORTS_POST]", error);
@@ -35,6 +38,7 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   try {
     const sports = await fetchSportsWithImage();
+    // await createApiCall({ req });
     return NextResponse.json(sports);
   } catch (error) {
     console.error("[SPORTS_GET]", error);

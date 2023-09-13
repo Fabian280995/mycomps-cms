@@ -6,6 +6,7 @@ import {
   fetchPublishedSlideshows,
   fetchSlideshows,
 } from "@/lib/actions/slideshows.actions";
+import { createApiCall } from "@/lib/actions/apiCalls.actions";
 
 export async function POST(req: Request) {
   try {
@@ -36,6 +37,9 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   try {
     const slideshows = await fetchPublishedSlideshows();
+
+    await createApiCall({ req });
+
     return NextResponse.json(slideshows);
   } catch (error) {
     console.error("[SLIDESHOWS_GET]", error);
