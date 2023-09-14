@@ -11,15 +11,16 @@ datasource db {
 }
 
 model User {
-  id        String            @id @default(auto()) @map("_id") @db.ObjectId
-  clerkId   String            @unique
-  email     String            @unique
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId   String    @unique
+  email     String    @unique
   firstName String
   lastName  String
-  role      UserRole          @default(USER)
-  onboarded Boolean           @default(false)
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
+  apiCalls  ApiCall[]
+  role      UserRole  @default(USER)
+  onboarded Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 enum UserRole {
@@ -28,15 +29,15 @@ enum UserRole {
 }
 
 model Sport {
-  id            String            @id @default(auto()) @map("_id") @db.ObjectId
-  adminId       String        
-  name          String
-  category     SportsCategory   @default(OTHER)
-  image         Image?            @relation(fields: [imageId], references: [id])
-  imageId       String?           @db.ObjectId
-  competitions  Competition[]
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  adminId      String
+  name         String
+  category     SportsCategory @default(OTHER)
+  image        Image?         @relation(fields: [imageId], references: [id])
+  imageId      String?        @db.ObjectId
+  competitions Competition[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
 }
 
 enum SportsCategory {
@@ -51,127 +52,128 @@ enum SportsCategory {
 }
 
 model Location {
-  id          String            @id @default(auto()) @map("_id") @db.ObjectId
-  adminId     String  
-  name        String
-  url         String
-  addressId   String?           @db.ObjectId
-  address     Address?          @relation(fields: [addressId], references: [id])
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  adminId      String
+  name         String
+  url          String
+  addressId    String?       @db.ObjectId
+  address      Address?      @relation(fields: [addressId], references: [id])
   competitions Competition[]
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Organizer {
-  id          String            @id @default(auto()) @map("_id") @db.ObjectId
-  adminId     String  
-  name        String
-  url         String
-  addressId   String?           @db.ObjectId
-  address     Address?          @relation(fields: [addressId], references: [id])
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  adminId      String
+  name         String
+  url          String
+  addressId    String?       @db.ObjectId
+  address      Address?      @relation(fields: [addressId], references: [id])
   competitions Competition[]
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Competition {
-  id          String            @id @default(auto()) @map("_id") @db.ObjectId
-  adminId     String  
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  adminId     String
   name        String
   description String?
   startDate   DateTime
   endDate     DateTime
-  isPublished Boolean           @default(false)
-  logo        Image?            @relation(fields: [logoId], references: [id])
-  logoId      String?           @db.ObjectId
-  sport       Sport             @relation(fields: [sportId], references: [id])
-  sportId     String            @db.ObjectId
-  location    Location          @relation(fields: [locationId], references: [id])
-  locationId  String            @db.ObjectId
-  organizer   Organizer         @relation(fields: [organizerId], references: [id])
-  organizerId String            @db.ObjectId
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  isPublished Boolean   @default(false)
+  logo        Image?    @relation(fields: [logoId], references: [id])
+  logoId      String?   @db.ObjectId
+  sport       Sport     @relation(fields: [sportId], references: [id])
+  sportId     String    @db.ObjectId
+  location    Location  @relation(fields: [locationId], references: [id])
+  locationId  String    @db.ObjectId
+  organizer   Organizer @relation(fields: [organizerId], references: [id])
+  organizerId String    @db.ObjectId
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Address {
-  id          String            @id @default(auto()) @map("_id") @db.ObjectId
-  adminId     String
-  street      String
-  number      String
-  city        String
-  state       String
-  zip         String
-  country     String
-  organizers  Organizer[]
-  locations   Location[]
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  adminId    String
+  street     String
+  number     String
+  city       String
+  state      String
+  zip        String
+  country    String
+  organizers Organizer[]
+  locations  Location[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 }
 
 model Image {
-  id          String            @id @default(auto()) @map("_id") @db.ObjectId
-  key         String            @default("no-key")
-  adminId     String
-  url         String
-  slides      Slide[]
-  sports      Sport[]
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  key          String        @default("no-key")
+  adminId      String
+  url          String
+  slides       Slide[]
+  sports       Sport[]
   competitions Competition[]
-  folder      ImageFolder?      @relation(fields: [folderId], references: [id])
-  folderId    String?           @db.ObjectId @default("default")
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  folder       ImageFolder?  @relation(fields: [folderId], references: [id])
+  folderId     String?       @default("default") @db.ObjectId
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model ImageFolder {
-  id          String            @id @default(auto()) @map("_id") @db.ObjectId
-  adminId     String
-  name        String
-  images      Image[]
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  adminId   String
+  name      String
+  images    Image[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Slideshow {
-  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   adminId     String
   name        String
-  isPublished Boolean           @default(false)
+  isPublished Boolean  @default(false)
   slides      Slide[]
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Slide {
-  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   adminId     String
   title       String
   description String?
-  slideshow   Slideshow         @relation(fields: [slideshowId], references: [id], onDelete: Cascade)
-  slideshowId String            @db.ObjectId
-  image       Image             @relation(fields: [imageId], references: [id])
-  imageId     String            @db.ObjectId
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  slideshow   Slideshow @relation(fields: [slideshowId], references: [id], onDelete: Cascade)
+  slideshowId String    @db.ObjectId
+  image       Image     @relation(fields: [imageId], references: [id])
+  imageId     String    @db.ObjectId
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
-
 model ApiCall {
-  id          String            @id @default(auto()) @map("_id") @db.ObjectId
-  method      ApiMethod         @default(UNKNOWN)
-  origin      String
-  url         String
-  mode        String
-  credentials String
-  header_date String
-  connection  String
-  protocol    String
-  host        String
-  pathname    String
-  port        String
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  method       ApiMethod @default(UNKNOWN)
+  origin       String
+  url          String
+  mode         String
+  credentials  String
+  header_date  String
+  connection   String
+  protocol     String
+  host         String
+  pathname     String
+  port         String
   searchParams String
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  adminId      String?   @db.ObjectId
+  user         User?     @relation(fields: [adminId], references: [id])
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
 enum ApiMethod {

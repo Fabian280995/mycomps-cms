@@ -1,9 +1,13 @@
+import UsersList from "@/components/dashboard/users-list";
 import PageHeader from "@/components/ui/page-header";
+import { fetchUsers } from "@/lib/actions/user.actions";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const users = await fetchUsers();
   return (
     <main className="w-full px-16 py-20">
-      <PageHeader title="Dashboard"></PageHeader>
+      <PageHeader title="Dashboard" />
+      <UsersList users={users} />
     </main>
   );
 }

@@ -81,7 +81,6 @@ export async function PATCH(
       return new NextResponse("Missing competitionId", { status: 400 });
     }
 
-    console.log("PATCH_COMPETITION_BODY:", body);
     const competition = await prismadb.competition.updateMany({
       where: {
         id: params.competitionId,

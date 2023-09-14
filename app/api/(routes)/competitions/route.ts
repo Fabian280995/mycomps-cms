@@ -32,8 +32,6 @@ export async function POST(req: Request) {
     if (!organizerId)
       return new NextResponse("Missing OrganizerId", { status: 400 });
 
-    console.log("POST_COMPETITION_BODY:", body);
-
     const competition = await prismadb.competition.create({
       data: {
         name,
@@ -100,8 +98,6 @@ export async function GET(req: Request) {
         startDate: "asc",
       },
     });
-
-    // await createApiCall({ req });
 
     return NextResponse.json(competitions);
   } catch (error) {

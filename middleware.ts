@@ -20,3 +20,11 @@ export default authMiddleware({
 export const config = {
   matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };
+
+/* export function middleware(request: NextRequest) {
+  console.log("MIDDLEWARE_NEXTURL_PATHNAME",request.nextUrl.pathname);
+  if(request.nextUrl.pathname.startsWith("/api/")) {
+    console.log("INSIDE API MIDDLEWARE");
+  }
+  return NextResponse.next();
+} */

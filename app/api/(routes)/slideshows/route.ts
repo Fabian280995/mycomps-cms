@@ -38,8 +38,6 @@ export async function GET(req: Request) {
   try {
     const slideshows = await fetchPublishedSlideshows();
 
-    await createApiCall({ req });
-
     return NextResponse.json(slideshows);
   } catch (error) {
     console.error("[SLIDESHOWS_GET]", error);
