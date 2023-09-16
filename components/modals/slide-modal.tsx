@@ -1,5 +1,5 @@
 "use client";
-import { Image, Slide } from "@prisma/client";
+import { Slide } from "@prisma/client";
 import React, { useEffect } from "react";
 import { Modal } from "../ui/modal";
 import { useForm } from "react-hook-form";

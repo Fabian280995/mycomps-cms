@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "../ui/modal";
 import { Button } from "../ui/button";
-import { set } from "date-fns";
 import axios from "axios";
 import { ImageFolder, Image as PImage } from "@prisma/client";
 import Image from "next/image";

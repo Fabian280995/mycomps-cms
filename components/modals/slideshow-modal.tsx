@@ -3,15 +3,13 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "../ui/modal";
 import { Button } from "../ui/button";
-import { Loader, Loader2 } from "lucide-react";
-import { Slideshow } from "@prisma/client";
+import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import { SaveAll, Trash } from "lucide-react";
 
 import {
   Form,
@@ -24,10 +22,8 @@ import {
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
-import { useParams, useRouter } from "next/navigation";
-import { AlertModal } from "@/components/modals/alert-modal";
+import { useRouter } from "next/navigation";
 import { SlideshowValidation } from "@/lib/validations/slideshows";
-import { Switch } from "@/components/ui/switch";
 
 interface Props {
   isOpen: boolean;
