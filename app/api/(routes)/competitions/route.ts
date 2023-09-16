@@ -57,13 +57,17 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
+    const page = searchParams.get("page") || undefined;
+    const limit = searchParams.get("limit") || undefined;
     const startDate = searchParams.get("startDate") || undefined;
     const endDate = searchParams.get("endDate") || undefined;
-    const sportId = searchParams.get("sportId") || undefined;
+    const sportIds = searchParams.getAll("sportId") || undefined;
     const locationId = searchParams.get("locationId") || undefined;
     const organizerId = searchParams.get("organizerId") || undefined;
 
     const competitions = await prismadb.competition.findMany({
+      take: limit ? parseInt(limit) : undefined,
+      skip: page && limit ? (parseInt(page) - 1) * parseInt(limit) : undefined,
       where: {
         startDate:
           startDate && endDate
@@ -71,7 +75,7 @@ export async function GET(req: Request) {
             : startDate
             ? { gte: new Date(startDate) }
             : undefined,
-        sportId,
+        sportId: sportIds.length ? { in: sportIds } : undefined,
         locationId,
         organizerId,
         isPublished: true,

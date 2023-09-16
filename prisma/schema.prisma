@@ -46,7 +46,6 @@ enum SportsCategory {
   COMBINED
   WATER
   WINTER
-  TEAM
   MARTIALARTS
   OTHER
 }
