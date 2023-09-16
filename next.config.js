@@ -1,18 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async headers() {
-    return [
-      {
-        source: "/api/competitions",
-        headers: [
-          {
-            key: "Access-Control-Allow-Origin",
-            value: "http://localhost:3001",
-          },
-        ],
-      },
-    ];
-  },
   experimental: {
     serverActions: true,
   },
