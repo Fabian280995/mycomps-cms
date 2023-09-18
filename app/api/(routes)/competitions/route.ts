@@ -1,6 +1,7 @@
 import { createApiCall } from "@/lib/actions/apiCalls.actions";
 import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -65,7 +66,7 @@ export async function GET(req: Request) {
     const locationId = searchParams.get("locationId") || undefined;
     const organizerId = searchParams.get("organizerId") || undefined;
 
-    const competitions = await prismadb.competition.findMany({
+    const query: Prisma.CompetitionFindManyArgs = {
       take: limit ? parseInt(limit) : undefined,
       skip: page && limit ? (parseInt(page) - 1) * parseInt(limit) : undefined,
       where: {
@@ -101,9 +102,19 @@ export async function GET(req: Request) {
       orderBy: {
         startDate: "asc",
       },
-    });
+    };
 
-    return NextResponse.json(competitions);
+    const [competitions, count] = await prismadb.$transaction([
+      prismadb.competition.findMany(query),
+      prismadb.competition.count({
+        where: query.where,
+      }),
+    ]);
+
+    return NextResponse.json({
+      pagination: { total: count },
+      data: competitions,
+    });
   } catch (error) {
     console.error("[COMPETITIONS_GET]", error);
     return new NextResponse("Internal error", { status: 500 });

@@ -1,4 +1,5 @@
 import { authMiddleware } from "@clerk/nextjs";
+import { NextRequest, NextResponse } from "next/server";
 
 // This example protects all routes including api/trpc routes
 // Please edit this to allow other routes to be public as needed.
@@ -15,6 +16,16 @@ export default authMiddleware({
 
   // An array of routes to be ignored by the authentication middleware.
   ignoredRoutes: ["/api/webhook/clerk"],
+  beforeAuth: async (req: NextRequest) => {
+    const origin = req.headers.get("origin");
+
+    if (origin && req.nextUrl.pathname.startsWith("/api/competitions")) {
+      const res = NextResponse.next();
+      res.headers.append("Access-Control-Allow-Origin", origin);
+      return res;
+    }
+    return NextResponse.next();
+  },
 });
 
 export const config = {
