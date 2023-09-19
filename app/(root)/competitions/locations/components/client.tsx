@@ -1,5 +1,6 @@
 "use client";
 
+import AddButton from "@/components/ui/add-button";
 import { LocationColumn, columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import { useEffect, useState } from "react";
@@ -19,7 +20,14 @@ export const LocationsClient: React.FC<LocationsClientProps> = ({ data }) => {
 
   return (
     <>
-      <DataTable columns={columns} data={data} searchKey="name" />
+      <DataTable
+        columns={columns}
+        data={data}
+        searchKey="name"
+        AddNewButton={() => (
+          <AddButton destination="competitions/locations" name="Location" />
+        )}
+      />
     </>
   );
 };

@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
-
-import { Button } from "@/components/ui/button";
 import { Input } from "./input";
 
 import {
   ColumnDef,
   ColumnFiltersState,
+  Table as TSTable,
+  TableOptions,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -22,17 +22,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Button } from "./button";
+import { RefreshCcw } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchKey: string;
+  AddNewButton?: React.FC;
+  Filter?: React.FC<{ table: TSTable<TData> }>;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   searchKey,
+  AddNewButton,
+  Filter,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -50,15 +56,31 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="w-full h-full pb-20">
-      <div className="flex items-center py-4 justify-between">
+      <div className="flex items-center py-4 justify-between gap-2 ">
         <Input
           placeholder="Search ..."
           value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn(searchKey)?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm "
         />
+        <div className="flex items-center gap-2 flex-1 justify-end">
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={() => table.resetColumnFilters()}
+            className="hover:bg-gray-200"
+          >
+            <RefreshCcw className="h-6 w-6 text-gray-700" />
+          </Button>
+          {Filter && (
+            <div className="w-64 ">
+              <Filter table={table} />
+            </div>
+          )}
+          {AddNewButton && <AddNewButton />}
+        </div>
       </div>
       <div className="rounded-md border bg-white">
         <Table>

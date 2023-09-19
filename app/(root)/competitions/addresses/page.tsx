@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { fetchAddresses } from "@/lib/actions/addresses.actions";
 import { AddressesClient } from "./components/client";
 import AddButton from "@/components/ui/add-button";
+import ClientContainer from "../components/client-container";
 
 export default async function SportPage() {
   const addresses = await fetchAddresses();
@@ -18,11 +19,8 @@ export default async function SportPage() {
   }));
 
   return (
-    <section className="w-full space-y-4 px-16 py-20">
-      <PageHeader title="Addresses" subtitle="Übersicht aller Adressen">
-        <AddButton destination="competitions/addresses" name="Adresse" />
-      </PageHeader>
+    <ClientContainer>
       <AddressesClient data={formattedAddresses} />
-    </section>
+    </ClientContainer>
   );
 }

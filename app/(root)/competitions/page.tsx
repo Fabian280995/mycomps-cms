@@ -2,6 +2,7 @@ import PageHeader from "@/components/ui/page-header";
 import { CompetitionsClient } from "./components/client";
 import { fetchCompetitions } from "@/lib/actions/competition.actions";
 import AddButton from "@/components/ui/add-button";
+import ClientContainer from "./components/client-container";
 
 export default async function CompetitionsPage() {
   const competitions = await fetchCompetitions();
@@ -27,11 +28,8 @@ export default async function CompetitionsPage() {
   }));
 
   return (
-    <section className="w-full flex flex-col px-12 py-8 pb-20 overflow-y-scroll">
-      <PageHeader title="Competitions" subtitle="Übersicht aller Wttkämpfe">
-        <AddButton destination="competitions" name="Wettkampf" />
-      </PageHeader>
+    <ClientContainer>
       <CompetitionsClient data={formattedCompetitions} />
-    </section>
+    </ClientContainer>
   );
 }

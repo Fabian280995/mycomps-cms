@@ -44,6 +44,7 @@ export const columns: ColumnDef<CompetitionColumn>[] = [
     header: "Date",
   },
   {
+    accessorKey: "sportId",
     header: "Sport",
     id: "sport",
     cell: ({ row }) => (

@@ -2,6 +2,7 @@ import PageHeader from "@/components/ui/page-header";
 import { fetchSportsWithImage } from "@/lib/actions/sport.actions";
 import { SportsClient } from "./components/client";
 import AddButton from "@/components/ui/add-button";
+import ClientContainer from "../components/client-container";
 
 export default async function SportPage() {
   const sports = await fetchSportsWithImage();
@@ -19,11 +20,8 @@ export default async function SportPage() {
   }));
 
   return (
-    <section className="w-full flex flex-col px-12 py-8 pb-20 overflow-y-scroll">
-      <PageHeader title="Sport" subtitle="Übersicht aller Sportarten">
-        <AddButton destination="competitions/sport" name="Sportart" />
-      </PageHeader>
+    <ClientContainer>
       <SportsClient data={formattedSports} />
-    </section>
+    </ClientContainer>
   );
 }

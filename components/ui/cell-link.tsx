@@ -36,7 +36,7 @@ export const CellLink: React.FC<CellActionProps> = ({
       )}
     >
       {mode === "link" ? (
-        <LinkIcon className="h-4 w-4 text-slate-400 group-hover:text-slate-700" />
+        <LinkIcon className="h-4 w-4 text-slate-400 group-hover:text-slate-700 min-w-[1.5rem]" />
       ) : imageSrc ? (
         <Image
           src={imageSrc}
@@ -44,7 +44,8 @@ export const CellLink: React.FC<CellActionProps> = ({
           width={32}
           height={32}
           quality={80}
-          className=" border group-hover:border-gray-500 object-cover object-center aspect-square rounded-lg mr-2"
+          className="border group-hover:border-gray-500 object-cover object-center aspect-square rounded-lg mr-2
+          min-w-[2rem]"
         />
       ) : null}
       {name}

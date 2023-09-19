@@ -5,6 +5,7 @@ import { OrganizersClient } from "./components/client";
 import prismadb from "@/lib/prismadb";
 import { fetchOrganizers } from "@/lib/actions/organizer.actions";
 import AddButton from "@/components/ui/add-button";
+import ClientContainer from "../components/client-container";
 
 export default async function OrganizersPage() {
   const organizers = await fetchOrganizers();
@@ -21,11 +22,8 @@ export default async function OrganizersPage() {
   }));
 
   return (
-    <section className="w-full px-16 py-20">
-      <PageHeader title="Organizers" subtitle="Übersicht aller Veranstalter">
-        <AddButton destination="competitions/organizers" name="Veranstalter" />
-      </PageHeader>
+    <ClientContainer>
       <OrganizersClient data={formattedOrganizers} />
-    </section>
+    </ClientContainer>
   );
 }

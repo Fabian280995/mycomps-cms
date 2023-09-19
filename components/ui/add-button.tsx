@@ -11,7 +11,6 @@ interface Props {
 
 const AddButton = ({ destination, name }: Props) => {
   const router = useRouter();
-
   return (
     <Button
       variant="default"

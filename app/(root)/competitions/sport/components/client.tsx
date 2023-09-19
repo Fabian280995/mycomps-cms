@@ -1,5 +1,6 @@
 "use client";
 
+import AddButton from "@/components/ui/add-button";
 import { SportColumn, columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import { useEffect, useState } from "react";
@@ -18,8 +19,13 @@ export const SportsClient: React.FC<SportsClientProps> = ({ data }) => {
   if (!isMounted) return null;
 
   return (
-    <div className="h-full mb-[10rem]">
-      <DataTable columns={columns} data={data} searchKey="name" />
-    </div>
+    <DataTable
+      columns={columns}
+      data={data}
+      searchKey="name"
+      AddNewButton={() => (
+        <AddButton destination="competitions/sport" name="Sportart" />
+      )}
+    />
   );
 };
