@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -40,6 +41,9 @@ import Image from "next/image";
 import ImagePickerTrigger from "@/components/gallery/image-picker-trigger";
 import { ImagePickerModal } from "@/components/modals/image-picker-modal";
 import { Switch } from "@/components/ui/switch";
+import LocationModal from "@/components/modals/location-modal";
+import OrganizerModal from "@/components/modals/organizer-modal";
+import SportModal from "@/components/modals/sport-modal";
 
 interface Props {
   initialData: Competition | null;
@@ -68,6 +72,10 @@ const CompetitionForm: React.FC<Props> = ({
 }) => {
   const params = useParams();
   const router = useRouter();
+
+  const [lodationModalOpen, setLodationModalOpen] = useState(false);
+  const [organizerModalOpen, setOrganizerModalOpen] = useState(false);
+  const [sportModalOpen, setSportModalOpen] = useState(false);
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -152,6 +160,18 @@ const CompetitionForm: React.FC<Props> = ({
   return (
     <div className="max-w-3xl mx-auto mt-6 mb-24">
       <div className="bg-white rounded-xl shadow-md px-10 py-12">
+        <SportModal
+          isOpen={sportModalOpen}
+          onClose={() => setSportModalOpen(false)}
+        />
+        <LocationModal
+          isOpen={lodationModalOpen}
+          onClose={() => setLodationModalOpen(false)}
+        />
+        <OrganizerModal
+          isOpen={organizerModalOpen}
+          onClose={() => setOrganizerModalOpen(false)}
+        />
         <AlertModal
           isOpen={open}
           onClose={() => setOpen(false)}
@@ -409,6 +429,16 @@ const CompetitionForm: React.FC<Props> = ({
                         ))}
                       </SelectContent>
                     </Select>
+                    <FormDescription>
+                      <Button
+                        type="button"
+                        variant="link"
+                        size="sm"
+                        onClick={() => setSportModalOpen(true)}
+                      >
+                        Neue Sportart
+                      </Button>
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -441,6 +471,16 @@ const CompetitionForm: React.FC<Props> = ({
                         ))}
                       </SelectContent>
                     </Select>
+                    <FormDescription>
+                      <Button
+                        type="button"
+                        variant="link"
+                        size="sm"
+                        onClick={() => setLodationModalOpen(true)}
+                      >
+                        Neue Location
+                      </Button>
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -473,6 +513,16 @@ const CompetitionForm: React.FC<Props> = ({
                         ))}
                       </SelectContent>
                     </Select>
+                    <FormDescription>
+                      <Button
+                        type="button"
+                        variant="link"
+                        size="sm"
+                        onClick={() => setOrganizerModalOpen(true)}
+                      >
+                        Neuer Veranstalter
+                      </Button>
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}

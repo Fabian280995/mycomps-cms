@@ -5,34 +5,30 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   Atom,
-  Dumbbell,
-  Home,
   Image,
   LayoutDashboard,
-  MapPin,
   MoreHorizontal,
   Newspaper,
   Settings,
   Trophy,
-  Users2,
-  Wrench,
   X,
 } from "lucide-react";
 import React from "react";
 
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/hooks/use-sidebar";
+import { is } from "date-fns/locale";
 
 export function Navigation({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
-  const [isExpanded, onExpand] = useSidebar((state) => [
-    state.isExpanded,
-    state.onExpand,
+  const [isMobile, isOpen, onClose] = useSidebar((state) => [
+    state.isMobile,
+    state.isOpen,
+    state.onClose,
   ]);
   const pathname = usePathname();
-  const params = useParams();
   const router = useRouter();
 
   const routes = [
@@ -82,7 +78,7 @@ export function Navigation({
     <nav
       className={cn(
         "flex flex-col space-y-4 justify-between",
-        isExpanded ? "w-full" : "items-center",
+        !isMobile ? "w-full" : "items-center",
         className
       )}
     >
@@ -91,7 +87,10 @@ export function Navigation({
           <button
             key={route.href}
             type="button"
-            onClick={() => handleCLick(route.href)}
+            onClick={() => {
+              if (isMobile) onClose();
+              handleCLick(route.href);
+            }}
           >
             <div
               className={cn(
@@ -103,23 +102,11 @@ export function Navigation({
               )}
             >
               {route.icon}
-              {isExpanded ? route.label : null}
+              {route.label}
             </div>
           </button>
         ))}
       </div>
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => onExpand()}
-        className="border self-end"
-      >
-        {isExpanded ? (
-          <X className="w-6 h-6 text-gray-500" />
-        ) : (
-          <MoreHorizontal className="w-6 h-6 text-gray-500" />
-        )}
-      </Button>
     </nav>
   );
 }

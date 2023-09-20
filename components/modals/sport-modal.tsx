@@ -1,14 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Image, Sport, SportsCategory } from "@prisma/client";
-import { toast } from "react-hot-toast";
-import axios from "axios";
-import { Loader, SaveAll, Trash } from "lucide-react";
-import { useForm } from "react-hook-form";
 
-import { Button } from "@/components/ui/button";
+import React from "react";
+import { Modal } from "../ui/modal";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 import {
   Form,
   FormControl,
@@ -16,23 +11,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-
-import { Input } from "@/components/ui/input";
-import { useParams, useRouter } from "next/navigation";
-import { AlertModal } from "@/components/modals/alert-modal";
-import ImagePicker from "@/components/ui/image-picker";
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Loader, SaveAll } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { SportsCategory } from "@prisma/client";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-
-interface Props {
-  initialData: Sport | null;
-}
+} from "../ui/select";
+import ImagePicker from "../ui/image-picker";
 
 const SportValidation = z.object({
   name: z.string().min(3).max(30),
@@ -40,98 +35,49 @@ const SportValidation = z.object({
   imageId: z.string().optional(),
 });
 
-const SportForm: React.FC<Props> = ({ initialData }) => {
-  const params = useParams();
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const SportModal = ({ isOpen, onClose }: Props) => {
+  const [loading, setLoading] = React.useState(false);
+
+  const title = "Erstelle eine neue Sportart!";
+  const action = "Speichern";
+
   const router = useRouter();
-
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const title = initialData ? "Edit Sport" : "New Sport";
-  const description = initialData
-    ? "Bearbeite folgende Sportart oder lösche sie."
-    : "Erstelle eine neue Sportart";
-  const toastMessage = initialData
-    ? "Sport updated successfully."
-    : "Sport created successfully.";
-  const action = initialData ? "Save Changes" : "Create";
 
   const form = useForm<z.infer<typeof SportValidation>>({
     resolver: zodResolver(SportValidation),
-    defaultValues: initialData
-      ? {
-          name: initialData?.name || "",
-          category: initialData?.category || "",
-          imageId: initialData?.imageId || "",
-        }
-      : {
-          name: "",
-          category: "STRENGTH",
-          imageId: "",
-        },
+    defaultValues: {
+      name: "",
+      category: "STRENGTH",
+      imageId: "",
+    },
   });
+
+  const handleClose = () => {
+    form.reset();
+    onClose();
+  };
 
   const onSubmit = async (data: z.infer<typeof SportValidation>) => {
     try {
       setLoading(true);
-      if (initialData) {
-        await axios.patch(`/api/sports/${params.sportId}`, data);
-      } else {
-        await axios.post(`/api/sports`, data);
-      }
+      await axios.post(`/api/sports`, data);
       router.refresh();
-      router.back();
-      toast.success(toastMessage);
+      toast.success("Sport saved successfully.");
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
     } finally {
+      handleClose();
       setLoading(false);
-    }
-  };
-
-  const onDelete = async () => {
-    try {
-      setLoading(true);
-      await axios.delete(`/api/sports/${params.sportId}`);
-      router.refresh();
-      router.back();
-      toast.success("Sport deleted successfully.");
-    } catch (error) {
-      toast.error(
-        "Something went wrong. Please try make sure to first delete all competitions using this Sport."
-      );
-    } finally {
-      setLoading(false);
-      setOpen(false);
     }
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md px-10 py-12 mx-2">
-      <AlertModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        onConfirm={() => onDelete()}
-        loading={loading}
-      />
-      <div className="flex items-center justify-between">
-        <div className="">
-          <h2 className="text-2xl font-semibold">{title}</h2>
-          <p className="text-gray-500">{description}</p>
-        </div>
-        {initialData && (
-          <Button
-            variant="destructive"
-            size="icon"
-            onClick={() => setOpen(true)}
-            disabled={loading}
-            type="button"
-          >
-            <Trash className="w-4 h-4" />
-          </Button>
-        )}
-      </div>
-      <hr className="my-4" />
+    <Modal isOpen={isOpen} onClose={handleClose} title={title}>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -223,8 +169,8 @@ const SportForm: React.FC<Props> = ({ initialData }) => {
           </div>
         </form>
       </Form>
-    </div>
+    </Modal>
   );
 };
 
-export default SportForm;
+export default SportModal;

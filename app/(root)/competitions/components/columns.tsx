@@ -73,11 +73,11 @@ export const columns: ColumnDef<CompetitionColumn>[] = [
         name={row.original.organizerName}
       />
     ),
-  },
+  } /* 
   {
     accessorKey: "createdAt",
     header: "Created At",
-  },
+  }, */,
   {
     id: "actions",
     cell: ({ row }) => <CellAction data={row.original} />,

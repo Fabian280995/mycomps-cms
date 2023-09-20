@@ -2,16 +2,21 @@ import { create } from "zustand";
 
 interface useSidebarProps {
   isOpen: boolean;
-  isExpanded: boolean;
+  isMobile: boolean;
   onOpen: () => void;
   onClose: () => void;
-  onExpand: () => void;
+  setMobileTrue: () => void;
+  setMobileFalse: () => void;
 }
 
-export const useSidebar = create<useSidebarProps>((set) => ({
+export const useSidebar = create<useSidebarProps>((set, get) => ({
   isOpen: true,
-  isExpanded: false,
-  onOpen: () => set({ isOpen: true }),
-  onClose: () => set({ isOpen: false }),
-  onExpand: () => set((state) => ({ isExpanded: !state.isExpanded })),
+  isMobile: false,
+  onOpen: () => set(() => ({ isOpen: true })),
+  onClose: () => set(() => ({ isOpen: false })),
+  setMobileTrue: () => set(() => ({ isMobile: true })),
+  setMobileFalse: () => {
+    set(() => ({ isMobile: false }));
+    if (!get().isOpen) set(() => ({ isOpen: true }));
+  },
 }));

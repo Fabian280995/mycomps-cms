@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -28,6 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import AddressModal from "@/components/modals/address-modal";
 
 interface Props {
   initialData: Organizer | null;
@@ -45,6 +47,7 @@ const OrganizerForm: React.FC<Props> = ({ initialData, addresses }) => {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
+  const [addressModalOpen, setAddressModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const title = initialData ? "Edit Organizer" : "New Organizer";
@@ -107,6 +110,10 @@ const OrganizerForm: React.FC<Props> = ({ initialData, addresses }) => {
 
   return (
     <div className="bg-white rounded-xl shadow-md px-10 py-12 mx-2">
+      <AddressModal
+        isOpen={addressModalOpen}
+        onClose={() => setAddressModalOpen(false)}
+      />
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
@@ -184,6 +191,16 @@ const OrganizerForm: React.FC<Props> = ({ initialData, addresses }) => {
                     ))}
                   </SelectContent>
                 </Select>
+                <FormDescription>
+                  <Button
+                    type="button"
+                    variant="link"
+                    size="sm"
+                    onClick={() => setAddressModalOpen(true)}
+                  >
+                    Erstelle eine neue Adresse
+                  </Button>
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

@@ -13,11 +13,13 @@ const AddButton = ({ destination, name }: Props) => {
   const router = useRouter();
   return (
     <Button
+      size="icon"
       variant="default"
       onClick={() => router.push(`/${destination}/new`)}
+      className="bg-teal-400 hover:bg-teal-500 text-white"
     >
-      <Plus className="h-6 w-6 mr-2" />
-      {name} hinzufügen
+      <Plus className="h-6 w-6" />
+      <p className="ml-2 hidden md:visible">{name} hinzufügen</p>
     </Button>
   );
 };

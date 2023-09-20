@@ -1,4 +1,5 @@
 import Sidebar from "@/components/sidebar";
+import BottomNav from "@/components/ui/bottom-nav";
 import prismadb from "@/lib/prismadb";
 
 import { ToasterProvider } from "@/providers/toast-provider";
