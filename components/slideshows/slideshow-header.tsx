@@ -94,7 +94,7 @@ const SlideshowHeader = ({
         loading={updatingSlide}
       />
 
-      <div className="flex flex-col md:flex-row w-full md:justify-between md:items-center gap-4">
+      <div className="flex flex-row max-sm:flex-col w-full sm:justify-between sm:items-center gap-4">
         <div className="flex gap-4 items-center max-md:flex-row-reverse">
           <div>
             {updatingSlide || loading ? (

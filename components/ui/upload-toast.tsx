@@ -12,7 +12,7 @@ const UploadToast = ({ message, progress }: Props) => {
   return (
     <motion.div
       key="UploadToast"
-      className="fixed bottom-4 right-4 z-50"
+      className="fixed top-4 right-[50%] -translate-x-1/2 z-50"
       initial={{ opacity: 0, y: 100 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 100 }}
