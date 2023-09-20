@@ -10,7 +10,7 @@ const FolderPage = async ({ params }: { params: { folderId: string } }) => {
   const folder = await fetchFolderWithImages(params.folderId);
 
   return (
-    <section className="relative max-w-7xl mx-auto px-16 py-20">
+    <>
       {folder ? (
         <FolderClient folder={folder} />
       ) : (
@@ -18,7 +18,7 @@ const FolderPage = async ({ params }: { params: { folderId: string } }) => {
           <p>Folder not found</p>
         </div>
       )}
-    </section>
+    </>
   );
 };
 

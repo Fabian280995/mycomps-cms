@@ -9,7 +9,7 @@ export default async function GalleryPage() {
   const folders = await fetchFoldersWithImages();
 
   return (
-    <ClientContainer>
+    <>
       <PageHeader title="Gallerie">
         <div className="flex">
           <p className="text-gray-400 ">using</p>
@@ -22,6 +22,6 @@ export default async function GalleryPage() {
         </div>
       </PageHeader>
       <GalleryClient folders={folders} />
-    </ClientContainer>
+    </>
   );
 }

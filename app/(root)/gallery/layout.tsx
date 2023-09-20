@@ -1,4 +1,5 @@
 import SidebarToggle from "@/components/sidebar/sidebar-toggle";
+import ClientContainer from "@/components/ui/client-container";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
@@ -17,7 +18,7 @@ export default async function GalleryLayout({
 
   return (
     <div className="relative w-full h-full flex">
-      <div className="overflow-y-auto flex-1">{children}</div>
+      <ClientContainer>{children}</ClientContainer>
       <SidebarToggle />
     </div>
   );

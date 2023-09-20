@@ -93,14 +93,10 @@ const GalleryClient = ({ folders }: Props) => {
       />
       <AnimatePresence mode="wait">
         {uploadOpen ? (
-          <UploadToast
-            isOpen={uploadOpen}
-            message="Uploading image."
-            progress={progress}
-          />
+          <UploadToast message="Uploading image." progress={progress} />
         ) : null}
       </AnimatePresence>
-      <div className="max-w-5xl mx-auto mt-4 space-y-4 mb-14">
+      <div className=" mt-4 space-y-4">
         <div className="flex justify-end">
           <div className="flex gap-x-2 items-center">
             <Button
