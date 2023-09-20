@@ -5,7 +5,7 @@ import { OrganizersClient } from "./components/client";
 import prismadb from "@/lib/prismadb";
 import { fetchOrganizers } from "@/lib/actions/organizer.actions";
 import AddButton from "@/components/ui/add-button";
-import ClientContainer from "../components/client-container";
+import ClientContainer from "../../../../components/ui/client-container";
 
 export default async function OrganizersPage() {
   const organizers = await fetchOrganizers();

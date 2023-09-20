@@ -2,15 +2,7 @@
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import {
-  ArrowBigRightDash,
-  Loader2,
-  Menu,
-  MenuIcon,
-  MenuSquare,
-  Sidebar,
-  SidebarOpen,
-} from "lucide-react";
+import { Loader2, Menu } from "lucide-react";
 import { motion } from "framer-motion";
 
 import {
@@ -46,7 +38,7 @@ const BottomNav = ({ routes }: Props) => {
 
   return (
     <motion.div
-      className="shadow-md rounded-full max-w-prose flex gap-x-6 bg-white px-2 py-2 md:mx-auto
+      className="shadow-md rounded-full max-w-prose flex gap-x-6 max-sm:gap-x-2 bg-white px-2 py-2 md:mx-auto
       items-center justify-around border"
       layout
     >

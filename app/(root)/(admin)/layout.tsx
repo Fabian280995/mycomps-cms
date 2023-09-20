@@ -4,6 +4,7 @@ import prismadb from "@/lib/prismadb";
 
 import { ToasterProvider } from "@/providers/toast-provider";
 import { currentUser } from "@clerk/nextjs";
+import { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default async function RootLayout({
@@ -17,13 +18,12 @@ export default async function RootLayout({
   const userInfo = await prismadb.user.findUnique({
     where: { clerkId: user.id },
   });
-  if (!userInfo?.onboarded) redirect("/onboarding");
 
-  return (
-    <div className="w-full h-screen flex overflow-hidden">
-      <ToasterProvider />
-      <Sidebar userInfo={userInfo} />
-      {children}
-    </div>
-  );
+  if (!userInfo) redirect("/onboarding");
+  if (!userInfo.onboarded) redirect("/onboarding");
+  if (userInfo.role.toString().toLowerCase() === "user") {
+    redirect("/");
+  }
+
+  return <div className="w-full h-screen flex overflow-hidden">{children}</div>;
 }

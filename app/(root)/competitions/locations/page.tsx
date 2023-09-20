@@ -5,7 +5,7 @@ import { Plus } from "lucide-react";
 import { LocationsClient } from "./components/client";
 import { fetchLocations } from "@/lib/actions/location.actions";
 import AddButton from "@/components/ui/add-button";
-import ClientContainer from "../components/client-container";
+import ClientContainer from "../../../../components/ui/client-container";
 
 export default async function LocationsPage() {
   const locations = await fetchLocations();

@@ -2,7 +2,7 @@ import PageHeader from "@/components/ui/page-header";
 import { fetchSportsWithImage } from "@/lib/actions/sport.actions";
 import { SportsClient } from "./components/client";
 import AddButton from "@/components/ui/add-button";
-import ClientContainer from "../components/client-container";
+import ClientContainer from "../../../../components/ui/client-container";
 
 export default async function SportPage() {
   const sports = await fetchSportsWithImage();

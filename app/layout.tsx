@@ -13,10 +13,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default async function SetupLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { storeId: string };
 }) {
   return (
     <ClerkProvider>

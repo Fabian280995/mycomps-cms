@@ -1,28 +1,30 @@
 import { User } from "@prisma/client";
-import { Mail, Puzzle, User2, User as UserIcon } from "lucide-react";
+import { color } from "framer-motion";
+import {
+  CircuitBoard,
+  Code2,
+  Mail,
+  Puzzle,
+  User2,
+  User as UserIcon,
+} from "lucide-react";
 import React from "react";
 
 interface Props {
   user: User;
 }
 
-function getRandomPastelColor(): string {
-  // Eine Liste von schönen Pastellfarben
-  const pastelColors = [
-    "#FFB6C1", // LightPink
-    "#FFA07A", // LightSalmon
-    "#87CEEB", // SkyBlue
-    "#98FB98", // PaleGreen
-    "#FFD700", // Gold
-    "#9370DB", // MediumPurple
-    "#F08080", // LightCoral
-    "#20B2AA", // LightSeaGreen
-  ];
+const colorByRole = {
+  user: "rgb(248, 113, 113)",
+  admin: "rgb(96, 165, 250)",
+  developer: "rgb(74, 222, 128)",
+};
 
-  // Eine zufällige Farbe aus der Liste auswählen
-  const randomIndex = Math.floor(Math.random() * pastelColors.length);
-  return pastelColors[randomIndex];
-}
+const iconByRole = {
+  user: <Puzzle className="w-5 h-5 min-w-[1.5rem] text-red-400" />,
+  admin: <CircuitBoard className="w-5 h-5 min-w-[1.5rem] text-blue-400" />,
+  developer: <Code2 className="w-5 h-5 min-w-[1.5rem] text-green-400" />,
+};
 
 const UserCard = ({ user }: Props) => {
   const { firstName, lastName, email } = user;
@@ -32,7 +34,15 @@ const UserCard = ({ user }: Props) => {
       <div className="flex gap-2 items-center w-full">
         <span
           className="p-2 rounded-full"
-          style={{ backgroundColor: getRandomPastelColor() }}
+          style={{
+            backgroundColor:
+              colorByRole[
+                user.role.toString().toLowerCase() as
+                  | "user"
+                  | "admin"
+                  | "developer"
+              ],
+          }}
         >
           <User2 className="w-6 h-6 text-gray-900" />
         </span>
@@ -41,15 +51,22 @@ const UserCard = ({ user }: Props) => {
           {lastName && lastName}
         </h4>
       </div>
-      <div className="flex flex-col px-2 w-full">
-        <p className="text-gray-700 truncate">
-          <Mail className="w-4 h-4 inline-block mr-2" />
-          {email}
-        </p>
-        <p className="text-gray-700 truncate">
-          <Puzzle className="w-4 h-4 inline-block mr-2" />
-          {user.role[0] + user.role.slice(1).toLowerCase()}
-        </p>
+      <div className="flex flex-col w-full">
+        <div className="w-full flex items-center gap-2 text-gray-500">
+          <Mail className="w-5 h-5 min-w-[1.5rem]" />
+          <p className=" truncate">{email}</p>
+        </div>
+        <div className="w-full flex items-center gap-2 text-gray-500">
+          {
+            iconByRole[
+              user.role.toLowerCase() as "user" | "admin" | "developer"
+            ]
+          }
+          <p className=" truncate">
+            {user.role[0].toString() +
+              user.role.toString().slice(1).toLowerCase()}
+          </p>
+        </div>
         <p className="text-gray-400 text-sm truncate self-end">
           {user.createdAt.toLocaleDateString()}
         </p>

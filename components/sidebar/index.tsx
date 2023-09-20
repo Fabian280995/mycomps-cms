@@ -6,8 +6,9 @@ import { Navigation } from "./navigation";
 import { Button } from "../ui/button";
 import { useSidebar } from "@/hooks/use-sidebar";
 import { Menu, X } from "lucide-react";
+import { User } from "@prisma/client";
 
-const Sidebar = () => {
+const Sidebar = ({ userInfo }: { userInfo: User }) => {
   const { isOpen, isMobile, setMobileTrue, setMobileFalse, onOpen, onClose } =
     useSidebar((state) => ({
       isOpen: state.isOpen,
@@ -31,6 +32,15 @@ const Sidebar = () => {
     return () => window.removeEventListener("resize", handleResize);
   });
 
+  useEffect(() => {
+    const windowWidth = window.innerWidth;
+    if (windowWidth < 820) {
+      setMobileTrue();
+    } else {
+      setMobileFalse();
+    }
+  }, []);
+
   return (
     <>
       {isOpen ? (
@@ -43,7 +53,7 @@ const Sidebar = () => {
               <UserButton afterSignOutUrl="/" />
             </div>
             <div className="flex w-full justify-center flex-1 mt-8 gap-y-2">
-              <Navigation />
+              <Navigation userRole={userInfo.role.toLowerCase() as string} />
             </div>
             {isMobile ? (
               <div className="self-end">

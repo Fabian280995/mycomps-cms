@@ -18,12 +18,11 @@ export default async function RootLayout({
     where: { clerkId: user.id },
   });
   if (!userInfo?.onboarded) redirect("/onboarding");
+  if (
+    userInfo?.role.toString().toLowerCase() === "user" ||
+    userInfo?.role.toString().toLowerCase() === "admin"
+  )
+    redirect("/");
 
-  return (
-    <div className="w-full h-screen flex overflow-hidden">
-      <ToasterProvider />
-      <Sidebar userInfo={userInfo} />
-      {children}
-    </div>
-  );
+  return <div className="w-full h-screen flex overflow-hidden">{children}</div>;
 }

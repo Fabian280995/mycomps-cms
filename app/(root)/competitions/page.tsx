@@ -2,7 +2,7 @@ import PageHeader from "@/components/ui/page-header";
 import { CompetitionsClient } from "./components/client";
 import { fetchCompetitions } from "@/lib/actions/competition.actions";
 import AddButton from "@/components/ui/add-button";
-import ClientContainer from "./components/client-container";
+import ClientContainer from "../../../components/ui/client-container";
 
 export default async function CompetitionsPage() {
   const competitions = await fetchCompetitions();

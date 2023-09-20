@@ -3,13 +3,14 @@ import React from "react";
 
 import PageHeader from "@/components/ui/page-header";
 import GalleryClient from "./components/client";
+import ClientContainer from "../../../components/ui/client-container";
 
 export default async function GalleryPage() {
   const folders = await fetchFoldersWithImages();
 
   return (
-    <section className="relative max-w-7xl mx-auto px-16 py-20">
-      <PageHeader title="Gallery" subtitle="Übersicht aller verwendeten Bilder">
+    <ClientContainer>
+      <PageHeader title="Gallerie">
         <div className="flex">
           <p className="text-gray-400 ">using</p>
           <a
@@ -21,6 +22,6 @@ export default async function GalleryPage() {
         </div>
       </PageHeader>
       <GalleryClient folders={folders} />
-    </section>
+    </ClientContainer>
   );
 }
