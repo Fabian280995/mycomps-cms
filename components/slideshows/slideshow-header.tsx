@@ -94,25 +94,26 @@ const SlideshowHeader = ({
         loading={updatingSlide}
       />
 
-      <div className="flex justify-between items-center gap-4">
-        <div className="flex gap-4 items-center">
-          {updatingSlide || loading ? (
-            <Loader2 className="w-6 h-6 animate-spin text-teal-600" />
-          ) : (
-            <Switch
-              checked={isPublished}
-              onCheckedChange={handlePublish}
-              disabled={updatingSlide || loading}
-            />
-          )}
+      <div className="flex flex-col md:flex-row w-full md:justify-between md:items-center gap-4">
+        <div className="flex gap-4 items-center max-md:flex-row-reverse">
+          <div>
+            {updatingSlide || loading ? (
+              <Loader2 className="w-6 h-6 animate-spin text-teal-600" />
+            ) : (
+              <Switch
+                checked={isPublished}
+                onCheckedChange={handlePublish}
+                disabled={updatingSlide || loading}
+              />
+            )}
+          </div>
           <div className="flex items-center">
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="text-2xl font-semibold text-gray-700 px-4 py-2 rounded-xl transition-all
-            disabled:bg-transparent focus:shadow-md focus:outline-none focus:-translate-y-1
-            focus:scale-[1.02]"
+            disabled:bg-transparent focus:shadow-md focus:outline-none w-full"
               disabled={!editMode || loading}
             />
             {editMode && name !== title ? (
@@ -120,7 +121,7 @@ const SlideshowHeader = ({
                 size="icon"
                 variant="outline"
                 onClick={() => onUpdate(id, name)}
-                className="hover:bg-gray-200"
+                className="hover:bg-gray-200 ml-2"
               >
                 {loading || updatingSlide ? (
                   <Loader2 className="w-6 h-6 text-gray-700 animate-spin" />
@@ -131,10 +132,10 @@ const SlideshowHeader = ({
             ) : null}
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-end">
           <Button
             size="icon"
-            variant="ghost"
+            variant="outline"
             onClick={() => setEditMode(!editMode)}
             className="hover:bg-gray-200"
           >
