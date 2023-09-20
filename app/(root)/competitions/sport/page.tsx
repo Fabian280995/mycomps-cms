@@ -19,9 +19,5 @@ export default async function SportPage() {
       } || null,
   }));
 
-  return (
-    <ClientContainer>
-      <SportsClient data={formattedSports} />
-    </ClientContainer>
-  );
+  return <SportsClient data={formattedSports} />;
 }

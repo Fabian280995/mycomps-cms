@@ -21,9 +21,5 @@ export default async function OrganizersPage() {
     createdAt: new Date(organizer.createdAt).toLocaleDateString(),
   }));
 
-  return (
-    <ClientContainer>
-      <OrganizersClient data={formattedOrganizers} />
-    </ClientContainer>
-  );
+  return <OrganizersClient data={formattedOrganizers} />;
 }

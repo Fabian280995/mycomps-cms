@@ -8,6 +8,7 @@ import { Plus } from "lucide-react";
 import React, { useState } from "react";
 
 import { motion } from "framer-motion";
+import ClientContainer from "@/components/ui/client-container";
 
 interface Props {
   slideshows: Slideshow[];
@@ -17,13 +18,13 @@ const SlideshowsClient = ({ slideshows }: Props) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <>
+    <ClientContainer>
       <SlideshowModal isOpen={open} onClose={() => setOpen(false)} />
       <div className="max-w-5xl mx-auto">
         {slideshows.length ? (
           <SlideshowsList slideshows={slideshows} />
         ) : (
-          <div className="flex mt-20 flex-col items-center justify-center space-y-4">
+          <div className="flex flex-col items-center justify-center space-y-4">
             <p className="text-xl font-semibold text-gray-400">
               No slideshows found.
             </p>
@@ -46,7 +47,7 @@ const SlideshowsClient = ({ slideshows }: Props) => {
           </Button>
         </motion.div>
       </div>
-    </>
+    </ClientContainer>
   );
 };
 

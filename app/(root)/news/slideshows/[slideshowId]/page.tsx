@@ -15,11 +15,7 @@ const AddressPage = async ({ params }: { params: { slideshowId: string } }) => {
     redirect("/news/slideshows");
   }
 
-  return (
-    <div className="w-full mt-20 max-w-3xl mx-auto">
-      <SlideshowClient slideshow={slideshow} slides={slides} />
-    </div>
-  );
+  return <SlideshowClient slideshow={slideshow} slides={slides} />;
 };
 
 export default AddressPage;

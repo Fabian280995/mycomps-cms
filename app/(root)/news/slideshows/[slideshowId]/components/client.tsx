@@ -104,7 +104,7 @@ const SlideshowClient = ({ slideshow, slides }: Props) => {
         onChange={handleChange}
         slideshowId={slideshow.id}
       />
-      <div className="space-y-4 pb-32">
+      <div className="space-y-4 max-w-3xl mx-auto">
         <SlideshowHeader
           id={slideshow.id}
           title={slideshow.name}
@@ -138,7 +138,7 @@ const SlideshowClient = ({ slideshow, slides }: Props) => {
             </div>
           )}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {slides && slides.length ? (
             slides.map((slide) => {
               const selected = currentSlide?.id === slide.id;

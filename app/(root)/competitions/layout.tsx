@@ -10,6 +10,7 @@ import {
   Trophy,
   Users2,
 } from "lucide-react";
+import ClientContainer from "@/components/ui/client-container";
 
 export default async function SetupLayout({
   children,
@@ -53,8 +54,8 @@ export default async function SetupLayout({
   ];
 
   return (
-    <div className="relative w-full flex">
-      <div className="h-full overflow-y-auto">{children}</div>
+    <div className="relative w-full h-full flex">
+      <ClientContainer>{children}</ClientContainer>
       <div className="bottom-4 w-full absolute mx-auto z-20 flex items-center justify-center">
         <BottomNav routes={routes} />
       </div>

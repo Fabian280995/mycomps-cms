@@ -21,9 +21,5 @@ export default async function LocationsPage() {
     createdAt: new Date(location.createdAt).toLocaleDateString(),
   }));
 
-  return (
-    <ClientContainer>
-      <LocationsClient data={formattedLocations} />
-    </ClientContainer>
-  );
+  return <LocationsClient data={formattedLocations} />;
 }

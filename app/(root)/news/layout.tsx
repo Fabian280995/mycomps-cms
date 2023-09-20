@@ -2,12 +2,8 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 import BottomNav from "@/components/ui/bottom-nav";
-import {
-  GalleryHorizontalEnd,
-  Image,
-  Newspaper,
-  ScrollText,
-} from "lucide-react";
+import { GalleryHorizontalEnd, Newspaper, ScrollText } from "lucide-react";
+import ClientContainer from "@/components/ui/client-container";
 
 export default async function SetupLayout({
   children,
@@ -42,7 +38,7 @@ export default async function SetupLayout({
 
   return (
     <div className="relative w-full h-full flex">
-      <div className="overflow-y-auto flex-1">{children}</div>
+      <ClientContainer>{children}</ClientContainer>
       <div className="absolute bottom-4 right-0 left-0 flex items-center justify-center">
         <BottomNav routes={routes} />
       </div>
