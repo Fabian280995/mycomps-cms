@@ -31,7 +31,6 @@ export default authMiddleware({
       const res = NextResponse.next();
       res.headers.append("Access-Control-Allow-Origin", origin);
       res.headers.append("Access-Control-Allow-Methods", "GET");
-      res.headers.append("Access-Control-Allow-Private-Network", "true");
       return res;
     }
   },
