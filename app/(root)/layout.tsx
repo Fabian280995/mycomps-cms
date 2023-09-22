@@ -1,7 +1,5 @@
 import Sidebar from "@/components/sidebar";
-import BottomNav from "@/components/ui/bottom-nav";
 import prismadb from "@/lib/prismadb";
-import { TanstackProvider } from "@/providers/query-client.provider";
 
 import { ToasterProvider } from "@/providers/toast-provider";
 import { currentUser } from "@clerk/nextjs";
