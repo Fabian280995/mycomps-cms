@@ -37,9 +37,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
-import Image from "next/image";
 import ImagePickerTrigger from "@/components/gallery/image-picker-trigger";
-import { ImagePickerModal } from "@/components/modals/image-picker-modal";
 import { Switch } from "@/components/ui/switch";
 import LocationModal from "@/components/modals/location-modal";
 import OrganizerModal from "@/components/modals/organizer-modal";

@@ -33,6 +33,7 @@ export default authMiddleware({
       res.headers.append("Access-Control-Allow-Methods", "GET");
       return res;
     }
+    return NextResponse.next();
   },
 });
 
