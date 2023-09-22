@@ -21,12 +21,10 @@ export default async function RootLayout({
   if (!userInfo?.onboarded) redirect("/onboarding");
 
   return (
-    <TanstackProvider>
-      <div className="w-full h-screen flex overflow-hidden">
-        <ToasterProvider />
-        <Sidebar userInfo={userInfo} />
-        {children}
-      </div>
-    </TanstackProvider>
+    <div className="w-full h-screen flex overflow-hidden">
+      <ToasterProvider />
+      <Sidebar userInfo={userInfo} />
+      {children}
+    </div>
   );
 }
