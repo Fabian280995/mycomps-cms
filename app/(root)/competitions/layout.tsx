@@ -2,22 +2,14 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 import BottomNav from "@/components/ui/bottom-nav";
-import {
-  Dumbbell,
-  Home,
-  MapPin,
-  Microscope,
-  Trophy,
-  Users2,
-} from "lucide-react";
+import { Dumbbell, Home, MapPin, Trophy, Users2 } from "lucide-react";
 import ClientContainer from "@/components/ui/client-container";
+import { Suspense } from "react";
 
 export default async function SetupLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { storeId: string };
 }) {
   const { userId } = auth();
 

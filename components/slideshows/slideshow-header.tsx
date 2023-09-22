@@ -1,22 +1,12 @@
 "use client";
 import React from "react";
-import { Switch } from "../ui/switch";
 import { Button } from "../ui/button";
-import {
-  Edit,
-  Edit2,
-  ImagePlus,
-  Loader2,
-  Plus,
-  Save,
-  Trash,
-  X,
-} from "lucide-react";
+import { Edit, ImagePlus, Loader2, Save, Trash, X } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { AlertModal } from "../modals/alert-modal";
-import { set } from "date-fns";
+import LoaderSwitch from "../ui/admin-switch";
 
 interface Props {
   id: string;
@@ -24,6 +14,7 @@ interface Props {
   isPublished: boolean;
   onCreateNewSlide: () => void;
   loading: boolean;
+  isAdmin: boolean;
 }
 
 const SlideshowHeader = ({
@@ -32,6 +23,7 @@ const SlideshowHeader = ({
   isPublished,
   onCreateNewSlide,
   loading,
+  isAdmin = false,
 }: Props) => {
   const [name, setName] = React.useState(title);
   const [alertOpen, setAlertOpen] = React.useState(false);
@@ -40,6 +32,12 @@ const SlideshowHeader = ({
   const router = useRouter();
 
   const handlePublish = async () => {
+    if (!isAdmin) {
+      toast.error(
+        "Du bist dazu nicht berechtigt! Bitte frage einen Administrator, oder Entwickler."
+      );
+      return;
+    }
     try {
       setUpdatingSlide(true);
       await axios.patch(`/api/slideshows/${id}`, {
@@ -96,17 +94,12 @@ const SlideshowHeader = ({
 
       <div className="flex flex-row max-sm:flex-col w-full sm:justify-between sm:items-center gap-4">
         <div className="flex gap-4 items-center max-md:flex-row-reverse">
-          <div>
-            {updatingSlide || loading ? (
-              <Loader2 className="w-6 h-6 animate-spin text-teal-600" />
-            ) : (
-              <Switch
-                checked={isPublished}
-                onCheckedChange={handlePublish}
-                disabled={updatingSlide || loading}
-              />
-            )}
-          </div>
+          <LoaderSwitch
+            updatingSlide={updatingSlide}
+            loading={loading}
+            isPublished={isPublished}
+            onPublish={handlePublish}
+          />
           <div className="flex items-center">
             <input
               type="text"

@@ -1,32 +1,32 @@
 "use client";
-import { AlertModal } from "@/components/modals/alert-modal";
+
+import React, { useEffect } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { Loader, Rat } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+import { Image as PrismaImage, Slideshow, User } from "@prisma/client";
+import { fetchImage } from "@/lib/actions/images.actions";
+
 import SlideModal from "@/components/modals/slide-modal";
 import BigSlideCard from "@/components/slideshows/big-slide-card";
 import SlideCard, { SlideWithImage } from "@/components/slideshows/slide-card";
 import SlideshowHeader from "@/components/slideshows/slideshow-header";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { fetchImage } from "@/lib/actions/images.actions";
-import { Image as PrismaImage, Slideshow } from "@prisma/client";
-import axios from "axios";
-import { Edit, Loader, Plus, Rat } from "lucide-react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
-import toast from "react-hot-toast";
 
 interface Props {
   slideshow: Slideshow;
   slides: SlideWithImage[] | null;
+  userInfo: User;
 }
 
-const SlideshowClient = ({ slideshow, slides }: Props) => {
+const SlideshowClient = ({ slideshow, slides, userInfo }: Props) => {
   const [loading, setLoading] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
-  const [alertOpen, setAlertOpen] = React.useState(false);
   const [currentSlide, setCurrentSlide] = React.useState<SlideWithImage | null>(
     null
   );
+  const isAdmin = userInfo.role === "ADMIN" || userInfo.role === "DEVELOPER";
 
   const router = useRouter();
 
@@ -111,6 +111,7 @@ const SlideshowClient = ({ slideshow, slides }: Props) => {
           isPublished={slideshow.isPublished}
           onCreateNewSlide={handleCreateNewSlide}
           loading={loading}
+          isAdmin={isAdmin}
         />
         <div className="relative w-full border aspect-[16/9] rounded-xl overflow-hidden">
           {!loading ? (

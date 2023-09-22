@@ -6,6 +6,8 @@ import {
 
 import SlideshowClient from "./components/client";
 import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs";
+import prismadb from "@/lib/prismadb";
 
 const AddressPage = async ({ params }: { params: { slideshowId: string } }) => {
   const slideshow = await fetchSlideshow(params.slideshowId);
@@ -15,7 +17,21 @@ const AddressPage = async ({ params }: { params: { slideshowId: string } }) => {
     redirect("/news/slideshows");
   }
 
-  return <SlideshowClient slideshow={slideshow} slides={slides} />;
+  const { userId } = auth();
+  if (!userId) redirect("/sign-in");
+
+  const userInfo = await prismadb.user.findUnique({
+    where: { clerkId: userId },
+  });
+  if (!userInfo) redirect("/");
+
+  return (
+    <SlideshowClient
+      slideshow={slideshow}
+      slides={slides}
+      userInfo={userInfo}
+    />
+  );
 };
 
 export default AddressPage;

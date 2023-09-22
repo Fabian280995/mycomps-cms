@@ -62,6 +62,7 @@ export const CompetitionValidation = z.object({
   locationId: z.string().min(4),
   organizerId: z.string().min(4),
   isPublished: z.boolean(),
+  enrollmentLink: z.string().min(8).max(255).optional(),
 });
 
 const CompetitionForm: React.FC<Props> = ({
@@ -97,6 +98,7 @@ const CompetitionForm: React.FC<Props> = ({
           logoId: initialData.logoId || "",
           endDate: initialData.startDate || null,
           description: initialData.description || "",
+          enrollmentLink: initialData.enrollmentLink || "",
         }
       : {
           name: "",
@@ -108,6 +110,7 @@ const CompetitionForm: React.FC<Props> = ({
           locationId: locations[0] ? locations[0].id : "",
           organizerId: organizers[0] ? organizers[0].id : "",
           isPublished: false,
+          enrollmentLink: "",
         },
   });
 
@@ -268,7 +271,23 @@ const CompetitionForm: React.FC<Props> = ({
               </FormItem>
             )}
           />
-
+          <FormField
+            control={form.control}
+            name="enrollmentLink"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Einschreibungs-Link</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={loading}
+                    placeholder="https://www.wettkampf.de/einschreibung"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="grid grid-cols-1 gap-8 items-center md:grid-cols-2 relative">
             <FormField
               control={form.control}

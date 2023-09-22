@@ -19,6 +19,7 @@ export async function POST(req: Request) {
       locationId,
       organizerId,
       isPublished,
+      enrollmentLink,
     } = body;
 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
@@ -45,6 +46,7 @@ export async function POST(req: Request) {
         locationId,
         organizerId,
         isPublished,
+        enrollmentLink,
       },
     });
 
@@ -104,15 +106,24 @@ export async function GET(req: Request) {
       },
     };
 
-    const [competitions, count] = await prismadb.$transaction([
+    const [competitions, count, previous] = await prismadb.$transaction([
       prismadb.competition.findMany(query),
       prismadb.competition.count({
         where: query.where,
       }),
+      prismadb.competition.count({
+        where: {
+          startDate: {
+            // set new Date to 00:00:00
+            lt: new Date(startDate || new Date().setHours(0, 0, 0, 0)),
+          },
+          sportId: sportIds.length ? { in: sportIds } : undefined,
+        },
+      }),
     ]);
 
     return NextResponse.json({
-      pagination: { total: count },
+      pagination: { total: count, previous: previous },
       data: competitions,
     });
   } catch (error) {

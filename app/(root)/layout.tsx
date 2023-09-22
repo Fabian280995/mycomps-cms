@@ -1,6 +1,7 @@
 import Sidebar from "@/components/sidebar";
 import BottomNav from "@/components/ui/bottom-nav";
 import prismadb from "@/lib/prismadb";
+import { TanstackProvider } from "@/providers/query-client.provider";
 
 import { ToasterProvider } from "@/providers/toast-provider";
 import { currentUser } from "@clerk/nextjs";
@@ -20,10 +21,12 @@ export default async function RootLayout({
   if (!userInfo?.onboarded) redirect("/onboarding");
 
   return (
-    <div className="w-full h-screen flex overflow-hidden">
-      <ToasterProvider />
-      <Sidebar userInfo={userInfo} />
-      {children}
-    </div>
+    <TanstackProvider>
+      <div className="w-full h-screen flex overflow-hidden">
+        <ToasterProvider />
+        <Sidebar userInfo={userInfo} />
+        {children}
+      </div>
+    </TanstackProvider>
   );
 }

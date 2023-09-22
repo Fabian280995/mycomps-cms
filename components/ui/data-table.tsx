@@ -65,20 +65,22 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm "
         />
-        {Filter && (
-          <div className="w-64 ">
-            <Filter table={table} />
-          </div>
-        )}
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={() => table.resetColumnFilters()}
-          className="hover:bg-gray-200"
-        >
-          <RefreshCcw className="h-6 w-6 text-gray-700" />
-        </Button>
-        {AddNewButton && <AddNewButton />}
+        <div className="flex gap-2 items-center">
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={() => table.resetColumnFilters()}
+            className="hover:bg-gray-200"
+          >
+            <RefreshCcw className="h-6 w-6 text-gray-700" />
+          </Button>
+          {Filter && (
+            <div className="w-64 ">
+              <Filter table={table} />
+            </div>
+          )}
+          {AddNewButton && <AddNewButton />}
+        </div>
       </div>
       <div className="rounded-md border bg-white">
         <Table>

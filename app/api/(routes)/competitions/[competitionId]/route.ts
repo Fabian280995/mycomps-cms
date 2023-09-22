@@ -54,6 +54,7 @@ export async function PATCH(
       locationId,
       organizerId,
       isPublished,
+      enrollmentLink,
     } = body;
 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
@@ -94,6 +95,7 @@ export async function PATCH(
         locationId,
         organizerId,
         isPublished,
+        enrollmentLink,
       },
     });
     return NextResponse.json(competition);

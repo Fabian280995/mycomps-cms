@@ -1,4 +1,20 @@
+"use server";
+import { Prisma } from "@prisma/client";
 import prismadb from "../prismadb";
+
+const competitionWithIncludes =
+  Prisma.validator<Prisma.CompetitionDefaultArgs>()({
+    include: {
+      logo: true,
+      sport: true,
+      location: true,
+      organizer: true,
+    },
+  });
+
+export type CompetitionsWithIncludes = Prisma.CompetitionGetPayload<
+  typeof competitionWithIncludes
+>;
 
 export const fetchCompetitions = async () => {
   try {
