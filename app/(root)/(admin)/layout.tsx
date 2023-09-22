@@ -19,8 +19,7 @@ export default async function RootLayout({
     where: { clerkId: user.id },
   });
 
-  if (!userInfo) redirect("/onboarding");
-  if (!userInfo.onboarded) redirect("/onboarding");
+  if (!userInfo?.onboarded) redirect("/onboarding");
   if (userInfo.role.toString().toLowerCase() === "user") {
     redirect("/");
   }
