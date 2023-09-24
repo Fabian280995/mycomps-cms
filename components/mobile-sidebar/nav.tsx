@@ -60,7 +60,7 @@ const SidebarNavigation = () => {
   };
 
   return (
-    <nav className="relative flex flex-col w-full h-full mt-8">
+    <nav className="relative flex flex-col w-full h-full mt-8 overflow-hidden">
       {routes.map((route, index) => {
         const isSelected = route.href === pathname;
         return (

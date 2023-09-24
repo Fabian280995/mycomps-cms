@@ -16,7 +16,7 @@ const AddButton = ({ destination, name }: Props) => {
       size="icon"
       variant="default"
       onClick={() => router.push(`/${destination}/new`)}
-      className="bg-teal-400 hover:bg-teal-500 text-white"
+      className="bg-purple-500 hover:bg-purple-700 text-white"
     >
       <Plus className="h-6 w-6" />
       <p className="ml-2 hidden md:visible">{name} hinzufügen</p>
