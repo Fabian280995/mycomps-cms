@@ -19,14 +19,6 @@ export default authMiddleware({
   beforeAuth: async (req: NextRequest) => {
     const origin = req.headers.get("origin");
 
-    if (!origin) {
-      return new NextResponse(null, {
-        status: 400,
-        statusText: "Bad Request",
-        headers: { "Content-Type": "text/plain" },
-      });
-    }
-
     if (origin && req.nextUrl.pathname.startsWith("/api/competitions")) {
       const res = NextResponse.next();
       res.headers.append("Access-Control-Allow-Origin", origin);
