@@ -12,7 +12,7 @@ const NewsClient = ({ publishedSlideshows }: Props) => {
   const slideshow: PublishedSlideshow = publishedSlideshows[0];
   return (
     <div className="flex flex-col gap-8 max-w-5xl mx-auto items-center">
-      {slideshow ? (
+      {/* {slideshow ? (
         <Carousel>
           {slideshow.slides.map((slide) => (
             <Slide key={slide.id} slide={slide} />
@@ -22,7 +22,7 @@ const NewsClient = ({ publishedSlideshows }: Props) => {
         <p className="text-gray-400 font-semibold text-center">
           no active slideshow...
         </p>
-      )}
+      )} */}
     </div>
   );
 };

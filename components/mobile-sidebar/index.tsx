@@ -1,11 +1,10 @@
-"use client";
 import { UserButton } from "@clerk/nextjs";
 import React from "react";
 import SidebarNavigation from "./nav";
 
-const Sidebar = () => {
+const MobileSidebar = () => {
   return (
-    <div className="flex bg-white flex-col justify-between shadow-md h-full">
+    <div className="bg-white flex flex-col justify-between shadow-md h-full">
       <div className="flex justify-center items-center w-full aspect-square">
         <UserButton afterSignOutUrl="/" />
       </div>
@@ -17,4 +16,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default MobileSidebar;

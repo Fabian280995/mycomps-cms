@@ -2,7 +2,7 @@
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Loader2, Menu } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 import {
@@ -11,8 +11,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./tooltip";
-import { useSidebar } from "@/hooks/use-sidebar";
-import { Button } from "./button";
 
 interface Props {
   routes?: {
@@ -24,11 +22,6 @@ interface Props {
 
 const BottomNav = ({ routes }: Props) => {
   const [isMounted, setIsMounted] = React.useState(false);
-  const { isMobile, onOpen } = useSidebar((state) => ({
-    isMobile: state.isMobile,
-    onOpen: state.onOpen,
-  }));
-
   const router = useRouter();
   const pathname = usePathname();
 
@@ -71,15 +64,6 @@ const BottomNav = ({ routes }: Props) => {
           <Loader2 className="w-6 h-6 text-slate-500" />
         </div>
       )}
-      {isMobile ? (
-        <Button
-          size="icon"
-          onClick={onOpen}
-          className="rounded-full bg-teal-400 hover:bg-teal-500 transition"
-        >
-          <Menu className="w-6 h-6" />
-        </Button>
-      ) : null}
     </motion.div>
   );
 };

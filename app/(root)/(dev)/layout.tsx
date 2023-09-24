@@ -1,4 +1,4 @@
-import Sidebar from "@/components/sidebar";
+import Sidebar from "@/components/alt/sidebar";
 import BottomNav from "@/components/ui/bottom-nav";
 import prismadb from "@/lib/prismadb";
 

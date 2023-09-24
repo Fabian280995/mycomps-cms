@@ -1,9 +1,11 @@
-import Sidebar from "@/components/sidebar";
 import prismadb from "@/lib/prismadb";
 
 import { ToasterProvider } from "@/providers/toast-provider";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+
+import MobileSidebar from "@/components/mobile-sidebar";
+import Sidebar from "@/components/sidebar";
 
 export default async function RootLayout({
   children,
@@ -19,10 +21,17 @@ export default async function RootLayout({
   if (!userInfo?.onboarded) redirect("/onboarding");
 
   return (
-    <div className="w-full h-screen flex overflow-hidden">
+    <div className="w-full h-screen overflow-hidden">
       <ToasterProvider />
-      <Sidebar userInfo={userInfo} />
-      {children}
+      <div className="w-full h-full flex">
+        <div className="max-md:hidden md:block h-full">
+          <Sidebar />
+        </div>
+        <div className="visible md:hidden h-full">
+          <MobileSidebar />
+        </div>
+        {children}
+      </div>
     </div>
   );
 }
