@@ -1,10 +1,6 @@
-import Sidebar from "@/components/alt/sidebar";
-import BottomNav from "@/components/ui/bottom-nav";
 import prismadb from "@/lib/prismadb";
 
-import { ToasterProvider } from "@/providers/toast-provider";
 import { currentUser } from "@clerk/nextjs";
-import { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default async function RootLayout({
