@@ -63,24 +63,23 @@ export async function GET(req: Request) {
     const page = searchParams.get("page") || undefined;
     const limit = searchParams.get("limit") || undefined;
     const startDate = searchParams.get("startDate") || undefined;
-    const endDate = searchParams.get("endDate") || undefined;
     const sportIds = searchParams.getAll("sportId") || undefined;
-    const locationId = searchParams.get("locationId") || undefined;
-    const organizerId = searchParams.get("organizerId") || undefined;
+    const searchTerm = searchParams.get("searchTerm") || undefined;
+
+    console.log("searchTerm", searchTerm);
 
     const query: Prisma.CompetitionFindManyArgs = {
       take: limit ? parseInt(limit) : undefined,
       skip: page && limit ? (parseInt(page) - 1) * parseInt(limit) : undefined,
       where: {
-        startDate:
-          startDate && endDate
-            ? { gte: new Date(startDate), lte: new Date(endDate) }
-            : startDate
-            ? { gte: new Date(startDate) }
-            : undefined,
+        name: searchTerm
+          ? {
+              contains: searchTerm,
+              mode: "insensitive",
+            }
+          : undefined,
+        startDate: startDate ? { gte: new Date(startDate) } : undefined,
         sportId: sportIds.length ? { in: sportIds } : undefined,
-        locationId,
-        organizerId,
         isPublished: true,
       },
       include: {
