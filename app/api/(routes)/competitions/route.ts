@@ -72,18 +72,9 @@ export async function GET(req: Request) {
       take: limit ? parseInt(limit) : undefined,
       skip: page && limit ? (parseInt(page) - 1) * parseInt(limit) : undefined,
       where: {
-        OR: [
-          {
-            name: searchTerm
-              ? { contains: searchTerm, mode: "insensitive" }
-              : undefined,
-          },
-          {
-            organizer: searchTerm
-              ? { name: { contains: searchTerm, mode: "insensitive" } }
-              : undefined,
-          },
-        ],
+        name: searchTerm
+          ? { contains: searchTerm, mode: "insensitive" }
+          : undefined,
         startDate: startDate ? { gte: new Date(startDate) } : undefined,
         sportId: sportIds.length ? { in: sportIds } : undefined,
         isPublished: true,
