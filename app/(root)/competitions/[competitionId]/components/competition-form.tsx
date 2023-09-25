@@ -60,7 +60,7 @@ export const CompetitionValidation = z.object({
   locationId: z.string().min(4),
   organizerId: z.string().min(4),
   isPublished: z.boolean(),
-  enrollmentLink: z.string().min(8).max(255).optional(),
+  enrollmentLink: z.string().optional(),
 });
 
 const CompetitionForm: React.FC<Props> = ({
