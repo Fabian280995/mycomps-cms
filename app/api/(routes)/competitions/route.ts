@@ -78,6 +78,14 @@ export async function GET(req: Request) {
               mode: "insensitive",
             }
           : undefined,
+        organizer: {
+          name: searchTerm
+            ? {
+                contains: searchTerm,
+                mode: "insensitive",
+              }
+            : undefined,
+        },
         startDate: startDate ? { gte: new Date(startDate) } : undefined,
         sportId: sportIds.length ? { in: sportIds } : undefined,
         isPublished: true,
