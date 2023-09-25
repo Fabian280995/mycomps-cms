@@ -39,6 +39,16 @@ const ImageCard = ({ image, onSelect, selected, loading }: Props) => {
         </div>
         <ImageActions data={image} />
       </div>
+      {image.creatorLink && (
+        <a
+          href={image.creatorLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute bottom-4 left-4 truncate text-white text-sm font-medium"
+        >
+          Creator: {image.creatorLink}
+        </a>
+      )}
       {image.key === "no-key" && (
         <div className="absolute bottom-4 right-4">
           <Ban className="w-8 h-8 text-red-500 drop-shadow-dark" />

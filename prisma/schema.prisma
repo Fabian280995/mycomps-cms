@@ -118,6 +118,7 @@ model Image {
   url          String
   slides       Slide[]
   sports       Sport[]
+  creatorLink  String?
   competitions Competition[]
   folder       ImageFolder?  @relation(fields: [folderId], references: [id])
   folderId     String?       @default("default") @db.ObjectId
