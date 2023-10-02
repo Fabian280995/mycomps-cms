@@ -10,6 +10,7 @@ export default authMiddleware({
     "/api/webhook/clerk",
     "/api/uploadthing",
     "/api/competitions",
+    "/api/competitions/:path*",
     "/api/sports",
     "/api/slideshows",
   ],

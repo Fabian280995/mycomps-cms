@@ -20,9 +20,22 @@ export async function GET(
         id: params.competitionId,
       },
       include: {
-        sport: true,
-        location: true,
+        sport: {
+          include: {
+            image: {
+              select: {
+                url: true,
+              },
+            },
+          },
+        },
+        location: {
+          include: {
+            address: true,
+          },
+        },
         organizer: true,
+        logo: true,
       },
     });
 
