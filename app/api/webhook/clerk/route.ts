@@ -1,6 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { createAppUser, deleteAppUser } from "@/lib/webhook/app-user.actions";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
@@ -49,39 +50,102 @@ export async function POST(req: Request) {
   }
 
   // Get the ID and type
-  const { id } = evt.data;
   const eventType = evt.type;
 
   // Handlers for each event type
   // User Created
   if (eventType === "user.created") {
-    // Do something
-    return new Response("User Created", {
-      status: 200,
-    });
+    const {
+      id,
+      email_addresses,
+      username,
+      first_name,
+      last_name,
+      banned,
+      image_url,
+    } = evt.data;
+    if (!id || !email_addresses.length || !username) {
+      return new Response("Error occured -- missing user data", {
+        status: 400,
+      });
+    }
+    try {
+      await createAppUser({
+        clerkId: id,
+        email: email_addresses[0].email_address,
+        imageUrl: image_url,
+        username: username,
+        firstName: first_name,
+        lastName: last_name,
+        banned,
+      });
+    } catch (error) {
+      console.error("Error creating user:", error);
+      return new Response("Internal Server Error", {
+        status: 500,
+      });
+    }
   }
 
   // User Updated
   if (eventType === "user.updated") {
-    // Do something
-    return new Response("User Updated", {
-      status: 200,
-    });
+    const {
+      id,
+      email_addresses,
+      username,
+      first_name,
+      last_name,
+      banned,
+      image_url,
+    } = evt.data;
+    if (!id || !email_addresses.length || !username) {
+      return new Response("Error occured -- missing user data", {
+        status: 400,
+      });
+    }
+    try {
+      await createAppUser({
+        clerkId: id,
+        email: email_addresses[0].email_address,
+        imageUrl: image_url,
+        username: username,
+        firstName: first_name,
+        lastName: last_name,
+        banned,
+      });
+    } catch (error) {
+      console.error("Error updating user:", error);
+      return new Response("Internal Server Error", {
+        status: 500,
+      });
+    }
   }
 
   // User Deleted
   if (eventType === "user.deleted") {
-    // Do something
-    return new Response("User Deleted", {
-      status: 200,
-    });
+    const { id } = evt.data;
+    if (!id) {
+      return new Response("Error occured -- no user id", {
+        status: 400,
+      });
+    }
+    try {
+      await deleteAppUser(id);
+      return new Response("User Deleted", {
+        status: 200,
+      });
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      return new Response("Internal Server Error", {
+        status: 500,
+      });
+    }
   }
 
   // Email Created
   if (eventType === "email.created") {
-    // Do something
-    return new Response("Email Created", {
-      status: 200,
+    return new Response("Request for email creation accepted", {
+      status: 202,
     });
   }
 

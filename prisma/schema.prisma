@@ -158,6 +158,21 @@ model Slide {
   updatedAt   DateTime  @updatedAt
 }
 
+model AppUser {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId   String   @unique
+  email     String   @unique
+  username  String
+  imageUrl  String?
+  firstName String?
+  lastName  String?
+  banned    Boolean  @default(false)
+  isDeleted Boolean  @default(false)
+  compIds   String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model ApiCall {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId
   method       ApiMethod @default(UNKNOWN)
