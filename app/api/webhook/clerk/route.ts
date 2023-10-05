@@ -52,8 +52,40 @@ export async function POST(req: Request) {
   const { id } = evt.data;
   const eventType = evt.type;
 
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
-  console.log("Webhook body:", body);
+  // Handlers for each event type
+  // User Created
+  if (eventType === "user.created") {
+    // Do something
+    return new Response("User Created", {
+      status: 200,
+    });
+  }
 
-  return new Response("", { status: 201 });
+  // User Updated
+  if (eventType === "user.updated") {
+    // Do something
+    return new Response("User Updated", {
+      status: 200,
+    });
+  }
+
+  // User Deleted
+  if (eventType === "user.deleted") {
+    // Do something
+    return new Response("User Deleted", {
+      status: 200,
+    });
+  }
+
+  // Email Created
+  if (eventType === "email.created") {
+    // Do something
+    return new Response("Email Created", {
+      status: 200,
+    });
+  }
+
+  return new Response("Error: No handler found for the specified event type.", {
+    status: 404,
+  });
 }

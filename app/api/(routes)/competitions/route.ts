@@ -66,8 +66,6 @@ export async function GET(req: Request) {
     const sportIds = searchParams.getAll("sportId") || undefined;
     const searchTerm = searchParams.get("searchTerm") || undefined;
 
-    console.log("searchTerm", searchTerm);
-
     const query: Prisma.CompetitionFindManyArgs = {
       take: limit ? parseInt(limit) : undefined,
       skip: page && limit ? (parseInt(page) - 1) * parseInt(limit) : undefined,
