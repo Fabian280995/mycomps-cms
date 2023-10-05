@@ -1,7 +1,11 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { createAppUser, deleteAppUser } from "@/lib/webhook/app-user.actions";
+import {
+  createAppUser,
+  deleteAppUser,
+  updateAppUser,
+} from "@/lib/webhook/app-user.actions";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
@@ -79,6 +83,9 @@ export async function POST(req: Request) {
         lastName: last_name,
         banned,
       });
+      return new Response("User Created", {
+        status: 200,
+      });
     } catch (error) {
       console.error("Error creating user:", error);
       return new Response("Internal Server Error", {
@@ -104,7 +111,7 @@ export async function POST(req: Request) {
       });
     }
     try {
-      await createAppUser({
+      await updateAppUser({
         clerkId: id,
         email: email_addresses[0].email_address,
         imageUrl: image_url,
@@ -112,6 +119,9 @@ export async function POST(req: Request) {
         firstName: first_name,
         lastName: last_name,
         banned,
+      });
+      return new Response("User Updated", {
+        status: 200,
       });
     } catch (error) {
       console.error("Error updating user:", error);

@@ -36,8 +36,8 @@ export const createAppUser = async ({
       },
     });
     return user;
-  } catch (error) {
-    throw error;
+  } catch (error: any) {
+    throw new Error(`Failed to create/update user: ${error.message}`);
   } finally {
     await prismadb.$disconnect();
   }
