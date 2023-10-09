@@ -100,6 +100,7 @@ export async function PATCH(
         id: params.competitionId,
       },
       data: {
+        name,
         description,
         startDate,
         endDate,

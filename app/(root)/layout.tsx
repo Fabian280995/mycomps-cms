@@ -14,7 +14,6 @@ export default async function RootLayout({
 }) {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
-
   const userInfo = await prismadb.user.findUnique({
     where: { clerkId: user.id },
   });
