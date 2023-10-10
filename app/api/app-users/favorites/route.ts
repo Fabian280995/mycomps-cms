@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
     await verifyJwtToken(req);
 
     const origin = req.headers.get("origin");
-    let message = `Hello ${origin}! Du hast es geschafft`;
+    let message = `Hello ${origin}! Du hast es geschafft du Fuchs! Hier sind deine Favoriten :D ...nicht.`;
 
     return new NextResponse(JSON.stringify({ message }), {
       status: 200,

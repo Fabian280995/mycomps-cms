@@ -13,7 +13,8 @@ export default authMiddleware({
     "/api/competitions/:path*",
     "/api/sports",
     "/api/slideshows",
-    "/api/favorites",
+    "/api/app-users",
+    "/api/app-users/:path*",
   ],
 
   // An array of routes to be ignored by the authentication middleware.
@@ -28,11 +29,14 @@ export default authMiddleware({
       return res;
     }
 
-    if (origin && req.nextUrl.pathname.startsWith("/api/favorites")) {
+    if (origin && req.nextUrl.pathname.startsWith("/api/app-users")) {
       const res = NextResponse.next();
       res.headers.append("Access-Control-Allow-Origin", origin);
-      res.headers.append("Access-Control-Allow-Methods", "GET");
-      res.headers.append("Access-Control-Allow-Headers", "Authorization");
+      res.headers.append("Access-Control-Allow-Methods", "GET, PATCH");
+      res.headers.append(
+        "Access-Control-Allow-Headers",
+        "Authorization, Content-Type"
+      );
       return res;
     }
   },
