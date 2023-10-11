@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(user);
   } catch (error) {
-    console.log("[COMPETITION_GET]", error);
+    console.log("[APP_USER_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
@@ -33,7 +33,7 @@ export async function PATCH(req: NextRequest) {
     const decoded = await verifyJwtToken(req);
 
     if (!decoded) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     const clerkId = decoded.sub;
@@ -45,7 +45,7 @@ export async function PATCH(req: NextRequest) {
     });
 
     if (!user) {
-      return new NextResponse("User not found", { status: 404 });
+      return new NextResponse("Unauthenticated", { status: 401 });
     }
 
     const body = await req.json();
@@ -65,7 +65,7 @@ export async function PATCH(req: NextRequest) {
 
     return NextResponse.json(updatedUser);
   } catch (error) {
-    console.log("[COMPETITION_PATCH]", error);
+    console.log("[APP_USER_PATCH]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
