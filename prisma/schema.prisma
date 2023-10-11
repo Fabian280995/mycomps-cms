@@ -158,21 +158,6 @@ model Slide {
   updatedAt   DateTime  @updatedAt
 }
 
-model AppUser {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  clerkId   String   @unique
-  email     String   @unique
-  username  String
-  imageUrl  String?
-  firstName String?
-  lastName  String?
-  banned    Boolean  @default(false)
-  isDeleted Boolean  @default(false)
-  compIds   String[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model ApiCall {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId
   method       ApiMethod @default(UNKNOWN)
@@ -200,4 +185,71 @@ enum ApiMethod {
   PATCH
   DELETE
   UNKNOWN
+}
+
+model AppUser {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId         String            @unique
+  email           String            @unique
+  username        String
+  imageUrl        String?
+  firstName       String?
+  lastName        String?
+  activeProgramId String?
+  programs        TrainingProgram[]
+  trainingLogs    TrainingsLog[]
+  banned          Boolean           @default(false)
+  isDeleted       Boolean           @default(false)
+  compIds         String[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+model TrainingProgram {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  weeks           Int
+  focusExercises  String[] // Liste von Übungen im Fokus
+  sessionsPerWeek Int
+  sessions        Session[]
+  appUserId       String    @db.ObjectId
+  appUser         AppUser   @relation(fields: [appUserId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Session {
+  id                 String          @id @default(auto()) @map("_id") @db.ObjectId
+  name               String
+  trainingsProgramId String          @db.ObjectId
+  trainingsProgram   TrainingProgram @relation(fields: [trainingsProgramId], references: [id])
+  exercises          Exercise[]
+  traininglogs       TrainingsLog[]
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+}
+
+model Exercise {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  trainigslogs TrainingsLog[]
+  sessionId    String         @db.ObjectId
+  session      Session        @relation(fields: [sessionId], references: [id])
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model TrainingsLog {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  appUserId  String   @db.ObjectId
+  appUser    AppUser  @relation(fields: [appUserId], references: [id])
+  sessionId  String   @db.ObjectId
+  session    Session  @relation(fields: [sessionId], references: [id])
+  exerciseId String   @db.ObjectId
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  set        Int
+  repsDone   Int
+  usedWeight Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
