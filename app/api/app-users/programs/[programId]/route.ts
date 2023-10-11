@@ -28,6 +28,9 @@ export async function GET(
       return new NextResponse("Unauthenticated", { status: 401 });
     }
 
+    if (!params.programId)
+      return new NextResponse("Missing programId", { status: 400 });
+
     const program = await prismadb.trainingProgram.findUnique({
       where: {
         id: params.programId,
