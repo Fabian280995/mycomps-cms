@@ -42,7 +42,11 @@ export async function GET(
       include: {
         sessions: {
           include: {
-            exercises: true,
+            exercises: {
+              include: {
+                exerciseData: true,
+              },
+            },
           },
         },
       },

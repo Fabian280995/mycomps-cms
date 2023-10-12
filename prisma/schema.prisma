@@ -219,24 +219,35 @@ model TrainingProgram {
 }
 
 model Session {
-  id                 String          @id @default(auto()) @map("_id") @db.ObjectId
+  id                 String            @id @default(auto()) @map("_id") @db.ObjectId
+  index              Int
   name               String
-  trainingsProgramId String          @db.ObjectId
-  trainingsProgram   TrainingProgram @relation(fields: [trainingsProgramId], references: [id])
-  exercises          Exercise[]
+  trainingsProgramId String            @db.ObjectId
+  trainingsProgram   TrainingProgram   @relation(fields: [trainingsProgramId], references: [id])
+  exercises          SessionExercise[]
   traininglogs       TrainingsLog[]
-  createdAt          DateTime        @default(now())
-  updatedAt          DateTime        @updatedAt
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+}
+
+model SessionExercise {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  index        Int
+  sessionId    String   @db.ObjectId
+  session      Session  @relation(fields: [sessionId], references: [id])
+  exerciseId   String   @db.ObjectId
+  exerciseData Exercise @relation(fields: [exerciseId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Exercise {
-  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  id           String            @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   trainigslogs TrainingsLog[]
-  sessionId    String         @db.ObjectId
-  session      Session        @relation(fields: [sessionId], references: [id])
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  sessions     SessionExercise[]
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
 }
 
 model TrainingsLog {
