@@ -220,7 +220,7 @@ model TrainingProgram {
 
 model Session {
   id                 String            @id @default(auto()) @map("_id") @db.ObjectId
-  index              Int
+  index              Int?
   name               String
   trainingsProgramId String            @db.ObjectId
   trainingsProgram   TrainingProgram   @relation(fields: [trainingsProgramId], references: [id])
@@ -232,7 +232,7 @@ model Session {
 
 model SessionExercise {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  index        Int
+  index        Int?
   sessionId    String   @db.ObjectId
   session      Session  @relation(fields: [sessionId], references: [id])
   exerciseId   String   @db.ObjectId
