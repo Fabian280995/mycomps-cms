@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   try {
     const decoded = await verifyJwtToken(req);
 
-    if (!decoded) {
+    if (!decoded || !decoded.sub) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 
     const programs = await prismadb.trainingProgram.findMany({
       where: {
-        appUserId: user.clerkId,
+        appUserId: user.id,
       },
     });
 

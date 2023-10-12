@@ -39,6 +39,13 @@ export async function GET(
       where: {
         id: params.programId,
       },
+      include: {
+        sessions: {
+          include: {
+            exercises: true,
+          },
+        },
+      },
     });
 
     return NextResponse.json(program);
