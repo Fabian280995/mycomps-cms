@@ -52,6 +52,7 @@ export default async function SetupLayout({
         <BottomNav routes={routes} />
       </div>
       <Script
+        async
         id="googlemaps"
         type="text/javascript"
         strategy="beforeInteractive"
