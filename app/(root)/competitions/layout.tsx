@@ -55,7 +55,7 @@ export default async function SetupLayout({
         id="googlemaps"
         type="text/javascript"
         strategy="beforeInteractive"
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places`}
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}&libraries=places`}
       />
     </div>
   );
