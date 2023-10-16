@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const { userId } = auth();
     const body = await req.json();
 
-    const { country, state, zip, city, street, number } = body;
+    const { country, state, zip, city, street, number, lat, lng } = body;
 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
 
@@ -18,6 +18,8 @@ export async function POST(req: Request) {
     if (!city) return new NextResponse("Missing City", { status: 400 });
     if (!street) return new NextResponse("Missing Street", { status: 400 });
     if (!number) return new NextResponse("Missing Number", { status: 400 });
+    if (!lat) return new NextResponse("Missing Latitude", { status: 400 });
+    if (!lng) return new NextResponse("Missing Longitude", { status: 400 });
 
     const address = await prismadb.address.create({
       data: {
@@ -28,6 +30,8 @@ export async function POST(req: Request) {
         street,
         number,
         adminId: userId,
+        lat,
+        lng,
       },
     });
 

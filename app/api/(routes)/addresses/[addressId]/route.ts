@@ -39,7 +39,7 @@ export async function PATCH(
   try {
     const { userId } = auth();
     const body = await req.json();
-    const { country, state, zip, city, street, number } = body;
+    const { country, state, zip, city, street, number, lat, lng } = body;
 
     if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
 
@@ -49,6 +49,8 @@ export async function PATCH(
     if (!city) return new NextResponse("Missing City", { status: 400 });
     if (!street) return new NextResponse("Missing Street", { status: 400 });
     if (!number) return new NextResponse("Missing Number", { status: 400 });
+    if (!lat) return new NextResponse("Missing Latitude", { status: 400 });
+    if (!lng) return new NextResponse("Missing Longitude", { status: 400 });
 
     if (!params.addressId) {
       return new NextResponse("Missing competitionId", { status: 400 });
@@ -65,6 +67,8 @@ export async function PATCH(
         city,
         street,
         number,
+        lat,
+        lng,
       },
     });
     return NextResponse.json(address);

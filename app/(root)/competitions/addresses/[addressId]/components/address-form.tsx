@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { useParams, useRouter } from "next/navigation";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { AddressValidation } from "@/lib/validations/addresses";
+import PlacesAutocomplete from "@/components/google/places-autocomplete";
 
 interface Props {
   initialData: Address | null;
@@ -52,8 +53,52 @@ const AddressForm: React.FC<Props> = ({ initialData }) => {
       number: "",
       zip: "",
       city: "",
+      lat: 0,
+      lng: 0,
     },
   });
+
+  const handleSelectPlace = (result: any) => {
+    try {
+      form.setValue(
+        "country",
+        result.address_components.find((c: any) => c.types.includes("country"))
+          .long_name
+      );
+      form.setValue(
+        "state",
+        result.address_components.find((c: any) =>
+          c.types.includes("administrative_area_level_1")
+        ).long_name
+      );
+      form.setValue(
+        "street",
+        result.address_components.find((c: any) => c.types.includes("route"))
+          .long_name
+      );
+      form.setValue(
+        "number",
+        result.address_components.find((c: any) =>
+          c.types.includes("street_number")
+        ).long_name
+      );
+      form.setValue(
+        "zip",
+        result.address_components.find((c: any) =>
+          c.types.includes("postal_code")
+        ).long_name
+      );
+      form.setValue(
+        "city",
+        result.address_components.find((c: any) => c.types.includes("locality"))
+          .long_name
+      );
+      form.setValue("lat", result.coordinates.lat);
+      form.setValue("lng", result.coordinates.lng);
+    } catch (error: any) {
+      toast.error(`Missing information: ${error.message}}`);
+    }
+  };
 
   const onSubmit = async (data: z.infer<typeof AddressValidation>) => {
     try {
@@ -78,7 +123,7 @@ const AddressForm: React.FC<Props> = ({ initialData }) => {
       setLoading(true);
       await axios.delete(`/api/addresses/${params.addressId}`);
       router.refresh();
-      router.push(`/addresses`);
+      router.push(`/competitions/addresses`);
       toast.success("Address deleted successfully.");
     } catch (error) {
       toast.error(
@@ -115,6 +160,9 @@ const AddressForm: React.FC<Props> = ({ initialData }) => {
         )}
       </div>
       <hr className="my-4" />
+      <div className="my-4 w-full">
+        <PlacesAutocomplete setSelected={handleSelectPlace} />
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -224,6 +272,34 @@ const AddressForm: React.FC<Props> = ({ initialData }) => {
                       placeholder="Name der Stadt ..."
                       {...field}
                     />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="lat"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Breitengrad (Latitude)</FormLabel>
+                  <FormControl>
+                    <Input disabled={true} type="number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lng"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Längengrad (Longitude)</FormLabel>
+                  <FormControl>
+                    <Input disabled={true} type="number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

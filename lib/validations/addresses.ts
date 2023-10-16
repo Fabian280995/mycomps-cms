@@ -7,4 +7,6 @@ export const AddressValidation = z.object({
   city: z.string().min(3).max(30),
   state: z.string().min(3).max(30),
   country: z.string().min(3).max(30),
+  lat: z.number().min(-90).max(90),
+  lng: z.number().min(-180).max(180),
 });
