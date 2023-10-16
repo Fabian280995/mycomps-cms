@@ -25,6 +25,22 @@ export async function GET(req: NextRequest) {
       where: {
         appUserId: user.id,
       },
+      include: {
+        sessions: {
+          include: {
+            exercises: {
+              include: {
+                exerciseData: {
+                  include: {
+                    traininglogs: true,
+                  },
+                },
+              },
+            },
+            traininglogs: true,
+          },
+        },
+      },
     });
 
     return NextResponse.json(programs);

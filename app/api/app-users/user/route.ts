@@ -15,6 +15,13 @@ export async function GET(req: NextRequest) {
       where: {
         clerkId: clerkId as string,
       },
+      include: {
+        programs: {
+          include: {
+            sessions: true,
+          },
+        },
+      },
     });
 
     if (!user) {

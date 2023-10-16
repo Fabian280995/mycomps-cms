@@ -244,7 +244,7 @@ model SessionExercise {
 model Exercise {
   id           String            @id @default(auto()) @map("_id") @db.ObjectId
   name         String
-  trainigslogs TrainingsLog[]
+  traininglogs TrainingsLog[]
   sessions     SessionExercise[]
   createdAt    DateTime          @default(now())
   updatedAt    DateTime          @updatedAt

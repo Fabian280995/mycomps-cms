@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 
 import MobileSidebar from "@/components/mobile-sidebar";
 import Sidebar from "@/components/sidebar";
+import Script from "next/script";
 
 export default async function RootLayout({
   children,
@@ -31,6 +32,12 @@ export default async function RootLayout({
         </div>
         {children}
       </div>
+      <Script
+        id="googlemaps"
+        type="text/javascript"
+        strategy="beforeInteractive"
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places`}
+      />
     </div>
   );
 }
