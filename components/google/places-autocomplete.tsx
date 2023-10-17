@@ -18,7 +18,9 @@ const PlacesAutocomplete = ({
     setValue,
     suggestions: { status, data },
     clearSuggestions,
-  } = usePlacesAutocomplete();
+  } = usePlacesAutocomplete({
+    callbackName: "initAutocomplete",
+  });
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const handleSelect = async (address: string) => {

@@ -47,7 +47,7 @@ const AddressForm: React.FC<Props> = ({ initialData }) => {
   const form = useForm<z.infer<typeof AddressValidation>>({
     resolver: zodResolver(AddressValidation),
     defaultValues: initialData || {
-      country: "Germany",
+      country: "",
       state: "",
       street: "",
       number: "",
