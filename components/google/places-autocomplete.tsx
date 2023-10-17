@@ -88,9 +88,12 @@ const PlacesAutocomplete = ({
 
   return (
     <div
-      className="bg-white rounded-md shadow-sm border relative
-    flex items-center w-full"
+      className={cn(
+        "bg-white rounded-md border relative flex items-center w-full overflow-hidden",
+        value && "border-teal-400"
+      )}
     >
+      {!ready && <div className="bg-black/20 absolute inset-0"></div>}
       <input
         value={value}
         onChange={(e) => setValue(e.target.value)}
