@@ -19,7 +19,13 @@ const PlacesAutocomplete = ({
     suggestions: { status, data },
     clearSuggestions,
   } = usePlacesAutocomplete({
-    callbackName: "initAutocomplete",
+    debounce: 300,
+    requestOptions: {
+      types: ["address"],
+      componentRestrictions: {
+        country: "de",
+      },
+    },
   });
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
